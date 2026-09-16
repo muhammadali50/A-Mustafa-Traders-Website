@@ -1,0 +1,42 @@
+@font-face { font-family: "Products Lobster"; src: url("/fonts/lobster.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Products Script"; src: url("/fonts/the-nautigal.ttf") format("truetype"); font-display: swap; }
+.section { background: #9e2424; height: clamp(414px, 55.8vw, 720px); }
+.heading { position: absolute; top: 5%; left: 3%; margin: 0; font-family: "Products Lobster", Georgia, serif; font-weight: 400; font-size: clamp(36px, 5.1vw, 66px); line-height: 1.2; }
+.signature { position: absolute; top: 25%; left: 50%; transform: translateX(-50%); width: max-content; margin: 0; color: #e0a99f; opacity: .88; font-family: "Products Script", "Segoe Script", cursive; font-size: clamp(120px, 21vw, 280px); font-weight: 400; letter-spacing: -.025em; white-space: nowrap; pointer-events: none; }
+.carousel { position: absolute; inset: 23% 0 15%; touch-action: pan-y; cursor: grab; outline-offset: -4px; }
+.carousel:active { cursor: grabbing; }
+.carousel:focus-visible { outline: 2px solid #fae9df; }
+.slot { position: absolute; left: 50%; top: 0; height: 100%; width: 27%; transform: translateX(-50%); transition: transform 450ms cubic-bezier(.22,.61,.36,1), opacity 450ms ease-out; }
+.slot[data-offset="0"] { z-index: 3; }
+.slot[data-offset="-1"] { transform: translateX(-210%) scale(.59); z-index: 2; }
+.slot[data-offset="1"] { transform: translateX(110%) scale(.59); z-index: 2; }
+.slot[data-offset="-2"] { transform: translateX(-340%) scale(.45); opacity: 0; pointer-events: none; }
+.slot[data-offset="2"] { transform: translateX(240%) scale(.45); opacity: 0; pointer-events: none; }
+.product { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: none; border: 0; padding: 0; cursor: inherit; -webkit-tap-highlight-color: transparent; }
+.product:focus-visible { outline: 2px solid #fae9df; outline-offset: 6px; border-radius: 8px; }
+.imageFrame { position: relative; display: block; height: 100%; flex-shrink: 0; overflow: hidden; pointer-events: none; user-select: none; }
+.imageFrame img { position: absolute; max-width: none; }
+.card { position: absolute; z-index: 1; left: 45%; top: 13%; width: 95%; min-height: 48%; padding: 16px 14px 16px 38%; border-radius: 22px; opacity: 0; transform: translateX(-45%); transition: transform 450ms ease-out, opacity 350ms ease-out; pointer-events: none; color: white; font-size: clamp(10px, 1.15vw, 15px); line-height: 1.4; }
+.cardOpen { opacity: 1; transform: translateX(22%); }
+.card h3 { font-family: Arial, sans-serif; font-weight: 700; margin: 0 0 6px; }
+.card p { margin: 5px 0 0; }
+.type { font-weight: 700; }
+.hint { position: absolute; bottom: 3.5%; width: 100%; text-align: center; margin: 0; font-family: Georgia, serif; font-weight: 700; font-size: clamp(18px, 2.3vw, 28px); }
+@media (max-width: 767px) {
+  .section { height: clamp(440px, 106vw, 610px); }
+  .heading { top: 8.5%; left: 0; width: 100%; text-align: center; font-size: clamp(29px, 8vw, 44px); }
+  .signature { top: 34%; font-size: clamp(110px, 30vw, 190px); }
+  .carousel { inset: 29.5% 0 auto; height: clamp(138px, 43vw, 230px); }
+  .slot { width: 34%; }
+  .slot[data-offset="-1"] { transform: translateX(-157%) scale(.69); }
+  .slot[data-offset="1"] { transform: translateX(57%) scale(.69); }
+  .hint { bottom: 10.5%; font-size: 20px; }
+  .expanded .slot[data-offset="0"] { transform: translateX(-74%) scale(.85); }
+  .expanded .slot[data-offset="1"] { opacity: .2; }
+  .card { top: 8%; left: 75%; width: 140%; min-height: 80%; padding: 14px 12px 14px 40%; font-size: 12px; border-radius: 18px; }
+  .cardOpen { transform: translateX(4%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slot, .card { transition: none; }
+}
+
