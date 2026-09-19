@@ -38,7 +38,7 @@ export default function ProductsSection() {
 
   return (
     <section id="products" aria-labelledby="products-title" className={`${styles.section} relative isolate overflow-hidden text-[#fae9df]`}>
-      <h2 id="products-title" className={styles.heading}>Our Products</h2>
+      <h2 id="products-title" className={styles.heading}>Products</h2>
       <p aria-hidden="true" className={styles.signature}>A Mustafa Traders</p>
       <div
         className={`${styles.carousel} ${open ? styles.expanded : ""}`}

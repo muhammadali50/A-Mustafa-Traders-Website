@@ -6,6 +6,10 @@
 }
 
 body { margin: 0; font-family: var(--font-sans); }
+html { scroll-behavior: smooth; }
+/* Include the header's original inset and the logo extending below the bar. */
+section[id] { scroll-margin-top: calc(7.8svh + max(44px, 22px + 3.56vw) + 16px); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 a:focus-visible, summary:focus-visible { outline: 3px solid #ffb743; outline-offset: 5px; }
 .site-header { top: 7.8svh; left: 3.17%; width: 93.66%; height: 44px; }
 .brand { left: 4.2%; top: 50%; width: 7.6%; aspect-ratio: 1; transform: translateY(-50%); }
@@ -37,11 +41,13 @@ a:focus-visible, summary:focus-visible { outline: 3px solid #ffb743; outline-off
 }
 
 @media (max-width: 767px) {
+  section[id] { scroll-margin-top: 88px; }
   .site-header { @apply absolute flex items-center px-2; top: 27px; left: 2.5%; width: 95%; height: 36px; }
   .brand { left: 7%; width: 54px; }
   .desktop-navigation { display: none; }
   .mobile-navigation { display: block; }
-  .mobile-navigation .nav-item { padding: 12px 0; font-size: 14px; }
+  .mobile-navigation .nav-item { padding: 12px 8px; font-size: 14px; border-radius: 6px; transition: color 200ms, background-color 200ms; }
+  .mobile-navigation a.nav-item:is(:hover, :focus-visible, :active) { background-color: white; color: #a12222; }
   summary::-webkit-details-marker { display: none; }
   .hero { @apply flex flex-col items-center; min-height: 100svh; padding: clamp(120px, 30.5vw, 148px) 16px 30px; }
   .hero-background { object-position: calc(50% + 85px) center; }

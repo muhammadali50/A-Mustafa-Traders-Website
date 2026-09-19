@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section aria-labelledby="hero-heading" className="hero relative min-h-svh">
+    <section id="home" aria-labelledby="hero-heading" className="hero relative min-h-svh">
       <Image src="/media/Home page Background Image.jpg" alt="" fill preload sizes="100vw" className="hero-background -z-20 object-cover" />
       <div aria-hidden="true" className="hero-shade pointer-events-none absolute inset-0 -z-10" />
       <div className="hero-copy absolute z-10 text-white">
@@ -24,4 +24,3 @@ export default function Hero() {
     </section>
   );
 }
-
