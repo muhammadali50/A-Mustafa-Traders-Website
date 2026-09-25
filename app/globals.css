@@ -49,12 +49,12 @@ a:focus-visible, summary:focus-visible { outline: 3px solid #ffb743; outline-off
   .mobile-navigation .nav-item { padding: 12px 8px; font-size: 14px; border-radius: 6px; transition: color 200ms, background-color 200ms; }
   .mobile-navigation a.nav-item:is(:hover, :focus-visible, :active) { background-color: white; color: #a12222; }
   summary::-webkit-details-marker { display: none; }
-  .hero { @apply flex flex-col items-center; min-height: 100svh; padding: clamp(120px, 30.5vw, 148px) 16px 30px; }
+  .hero { @apply flex flex-col items-center; min-height: 100svh; padding: clamp(176px, 25svh, 240px) 16px 30px; }
   .hero-background { object-position: calc(50% + 85px) center; }
   .hero-shade { background: linear-gradient(90deg, rgb(14 23 17 / 10%), rgb(14 23 17 / 3%) 35%, transparent 66%); }
   .hero-copy { @apply relative inset-auto w-full text-center; max-width: 440px; }
   .hero-copy h1 { font-size: clamp(30px, 9.2vw, 44px); line-height: 1.08; }
-  .hero-copy h1 span + span { margin-top: 0; font-size: 1.16em; line-height: 1.08; }
+  .hero-copy h1 span + span { margin-top: 0; font-size: 1.16em; line-height: 1.08; color: #a12222; }
   .hero-description { margin: 12px auto 0; max-width: 330px; font-size: clamp(13px, 3.45vw, 16px); line-height: 1.3; text-wrap: balance; }
   .hero-description br { display: none; }
   .product-composition { @apply relative inset-auto shrink-0; width: min(310px, 80vw); height: auto; aspect-ratio: 1.25; margin: 0 auto; }
