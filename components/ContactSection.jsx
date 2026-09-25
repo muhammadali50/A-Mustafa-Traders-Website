@@ -22,10 +22,10 @@ export default function ContactSection() {
           <p className="mt-1 text-[13px] font-bold min-[640px]:text-[clamp(9px,1.4vw,17px)]">We’d love to hear from you.</p>
           <p className="mx-auto mt-4 max-w-[350px] text-[12px] leading-[1.35] min-[640px]:mt-[3%] min-[640px]:max-w-none min-[640px]:text-[clamp(8px,1.05vw,13px)]">For rice orders, product information, pricing, or any other inquiry, feel free to contact A Mustafa Traders. Our team is always ready to assist you.</p>
           <div className="mt-6 flex items-center justify-center gap-3 min-[640px]:mt-[6%] min-[640px]:gap-[2%]" aria-label="Social media and email">
-            {socialLinks.map(({ name, icon, href }) => {
+            {socialLinks.map(({ name, icon, href, newTab }) => {
               const className = "flex h-11 w-11 items-center justify-center rounded-lg min-[640px]:h-[clamp(32px,4.3vw,48px)] min-[640px]:w-[clamp(32px,4.3vw,48px)] transition-colors duration-200 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
               const graphic = <ContactIcon icon={icon} className="h-7 w-7 min-[640px]:h-[clamp(22px,3vw,36px)] min-[640px]:w-[clamp(22px,3vw,36px)]" />;
-              return href ? <a key={name} href={href} aria-label={name} className={className}>{graphic}</a> : <button key={name} type="button" aria-label={`${name} — link coming soon`} aria-disabled="true" title={`${name} link coming soon`} className={`${className} cursor-default`}>{graphic}</button>;
+              return href ? <a key={name} href={href} target={newTab ? "_blank" : undefined} rel={newTab ? "noopener noreferrer" : undefined} aria-label={name} className={className}>{graphic}</a> : <button key={name} type="button" aria-label={`${name} — link coming soon`} aria-disabled="true" title={`${name} link coming soon`} className={`${className} cursor-default`}>{graphic}</button>;
             })}
           </div>
         </div>

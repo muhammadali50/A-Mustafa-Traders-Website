@@ -31,7 +31,7 @@ export default function HistorySection() {
           <div>
             <h2 id="history-title" className={`${historyFont.className} m-0 text-center text-[clamp(32px,10.5vw,44px)] leading-[1.1] font-normal text-[#ac3033] min-[640px]:pl-[2%] min-[640px]:text-left min-[640px]:text-[clamp(36px,5.6vw,68px)]`}>History</h2>
             <div className="mt-[6%] bg-[#9e2424] px-[9%] py-[7%] text-center text-[clamp(14px,4.05vw,18px)] leading-[1.32] text-white min-[640px]:mt-[6.3%] min-[640px]:px-[5.3%] min-[640px]:py-[8.2%] min-[640px]:text-left min-[640px]:text-[clamp(15px,2.28vw,28px)]">
-              <p className="m-0">Founded in 1948 by <strong>Late Haji Muhammad Siddique</strong>, the business grew through honesty, hard work, and a commitment to providing quality rice sourced from Punjab and other cities. In 1968, his son <strong>Haji Noor Mustafa Mustafi</strong> joined the business, continuing his father’s legacy and carrying forward the same values of quality, trust, and customer satisfaction.</p>
+              <p className="m-0">Founded in 1948 by <strong>Late Haji Muhammad Siddique</strong>, the business grew through honesty, hard work, and a commitment to providing quality rice sourced from Punjab and other cities. In 1968, his son <strong>Haji Noor Mustafa Mustafai</strong> joined the business, continuing his father’s legacy and carrying forward the same values of quality, trust, and customer satisfaction.</p>
             </div>
           </div>
           <div className="relative mt-[13%] flex flex-col items-center gap-[8vw] min-[640px]:mt-0 min-[640px]:block min-[640px]:min-h-[46vw] min-[1280px]:min-h-[589px]">

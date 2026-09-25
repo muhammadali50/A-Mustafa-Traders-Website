@@ -3,10 +3,10 @@ export const contacts = [
   { name: "Abdulhaq Mustafai", role: "Managing Director & Co-Owner", phone: "0312-4462201", href: "tel:+923124462201" },
 ];
 
-// Add verified account URLs (or a mailto address) here when supplied.
+// Official social and email destinations.
 export const socialLinks = [
-  { name: "Instagram", icon: "instagram", href: null },
-  { name: "Facebook", icon: "facebook", href: null },
-  { name: "WhatsApp", icon: "whatsapp", href: null },
-  { name: "Email", icon: "email", href: null },
+  { name: "Instagram", icon: "instagram", href: "https://www.instagram.com/amustafatraders786/", newTab: true },
+  { name: "Facebook", icon: "facebook", href: "https://www.facebook.com/profile.php?id=61594646041435", newTab: true },
+  { name: "WhatsApp", icon: "whatsapp", href: "https://wa.me/923717423270" },
+  { name: "Email", icon: "email", href: "mailto:amustafatraders786@gmail.com" },
 ];
