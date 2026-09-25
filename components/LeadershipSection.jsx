@@ -4,9 +4,9 @@ import localFont from "next/font/local";
 const headingFont = localFont({ src: "../public/fonts/lobster.ttf", weight: "400", display: "swap" });
 
 const leaders = [
-  { name: "Haji Meraj Ul Haq Mustafai", role: "CEO & Co-Owner", image: "Haji Meraj Ul Haq Mustafai.png", width: 1122, height: 1402 },
-  { name: "Abdulhaq Mustafai", role: "Managing Director & Co-Owner", image: "Haji AbdulHaq Mustafai.png", width: 1122, height: 1402 },
-  { name: "Akbar Ali", role: "Operations Manager", image: "Akbar Ali.png", width: 1122, height: 1190 },
+  { name: "Haji Meraj Ul Haq Mustafai", role: "CEO & Co-Owner", image: "Haji Meraj Ul Haq Mustafai.webp", width: 1122, height: 1402 },
+  { name: "Abdulhaq Mustafai", role: "Managing Director & Co-Owner", image: "Haji AbdulHaq Mustafai.webp", width: 1122, height: 1402 },
+  { name: "Akbar Ali", role: "Operations Manager", image: "Akbar Ali.webp", width: 1122, height: 1190 },
 ];
 
 export default function LeadershipSection() {

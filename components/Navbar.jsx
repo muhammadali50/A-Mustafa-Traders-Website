@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,14 +27,31 @@ function NavigationItems({ onNavigate }) {
 
 export default function Navbar() {
   const menuRef = useRef(null);
+  const headerRef = useRef(null);
+  const [scrolling, setScrolling] = useState(false);
+
+  useEffect(() => {
+    let idleTimer;
+    function onScroll() {
+      clearTimeout(idleTimer);
+      const keepVisible = window.scrollY <= 8 || menuRef.current?.open || headerRef.current?.querySelector(":focus-visible");
+      setScrolling(!keepVisible);
+      idleTimer = setTimeout(() => setScrolling(false), 250);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(idleTimer);
+    };
+  }, []);
   function closeMenu() {
     if (menuRef.current) menuRef.current.open = false;
   }
   return (
     <div className="sticky top-0 z-50 h-0">
-    <header className="site-header absolute z-20 bg-[#a12222] text-white">
+    <header ref={headerRef} onFocusCapture={() => setScrolling(false)} data-scrolling={scrolling} className="site-header absolute z-20 bg-[#a12222] text-white transition-opacity duration-200 data-[scrolling=true]:pointer-events-none data-[scrolling=true]:opacity-0 motion-reduce:transition-none">
       <Link href="#home" onClick={closeMenu} aria-label="A. Mustafa Traders home" className="brand absolute">
-        <Image src="/media/AMT logo.png" alt="AM Traders Nawabshah" width={1254} height={1254} loading="eager" className="h-full w-full object-contain" sizes="(max-width: 767px) 64px, 8vw" />
+        <Image src="/media/AMT logo.webp" alt="AM Traders Nawabshah" width={1254} height={1254} loading="eager" className="h-full w-full object-contain" sizes="(max-width: 767px) 64px, 8vw" />
       </Link>
       <nav aria-label="Main navigation" className="desktop-navigation h-full">
         <ul className="flex h-full items-center justify-end"><NavigationItems /></ul>

@@ -15,7 +15,7 @@ function ContactIcon({ icon, className = "" }) {
 export default function ContactSection() {
   return (
     <section id="contact" aria-labelledby="contact-title" className="relative isolate overflow-hidden bg-[#9e2424] text-white">
-      <Image src="/media/contact us image.png" alt="" width={1172} height={1342} className="pointer-events-none absolute inset-y-0 left-0 hidden h-full w-auto object-contain min-[640px]:block" sizes="23vw" />
+      <Image src="/media/contact us image.webp" alt="" width={1172} height={1342} className="pointer-events-none absolute inset-y-0 left-0 hidden h-full w-auto object-contain min-[640px]:block" sizes="23vw" />
       <div className="relative mx-auto flex min-h-[560px] max-w-[1280px] flex-col items-center px-[8%] pt-10 pb-20 min-[640px]:min-h-0 min-[640px]:flex-row min-[640px]:items-center min-[640px]:gap-[5%] min-[640px]:py-[2.5%] min-[640px]:pr-[5.7%] min-[640px]:pl-[28%]">
         <div className="w-full text-center min-[640px]:w-[68%]">
           <h2 id="contact-title" className={`${headingFont.className} text-[36px] leading-[1.1] font-normal min-[640px]:text-[clamp(28px,4vw,48px)]`}>Contact Us</h2>

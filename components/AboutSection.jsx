@@ -9,7 +9,7 @@ export default function AboutSection() {
     <section id="about" aria-labelledby="about-title" className="relative isolate overflow-hidden bg-white text-[#ac3033]">
       <div className="relative mx-auto max-w-[1280px] px-[8%] pt-10 pb-16 min-[640px]:px-[6.3%] min-[640px]:pt-[5.7%] min-[640px]:pb-[9.4%]">
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-[5%] top-[18%] -z-10 h-[65%] opacity-[0.36] min-[640px]:inset-x-[28%] min-[640px]:top-[14%] min-[640px]:h-[68%]">
-          <Image src="/media/background image of history and about us.png" alt="" fill className="object-contain" sizes="(max-width: 639px) 90vw, 44vw" />
+          <Image src="/media/background image of history and about us.webp" alt="" fill className="object-contain" sizes="(max-width: 639px) 90vw, 44vw" />
         </div>
         <h2 id="about-title" className={`${headingFont.className} m-0 text-center text-[clamp(34px,9vw,42px)] leading-[1.15] font-normal min-[640px]:pl-[2.5%] min-[640px]:text-left min-[640px]:text-[clamp(36px,5.6vw,68px)]`}>About Us</h2>
         <p className="mt-5 text-center text-[14px] leading-[1.42] min-[640px]:mt-[2.3%] min-[640px]:text-left min-[640px]:text-[clamp(14px,2.02vw,24px)] min-[640px]:leading-[1.35]">

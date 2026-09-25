@@ -7,14 +7,14 @@ const founders = [
   {
     name: "Late Haji Muhammad Saddique",
     role: "Founder of A Mustafa Traders",
-    image: "Late Haji Muhammad Siddque.png",
+    image: "Late Haji Muhammad Siddque.webp",
     width: 224, height: 299,
     position: "min-[640px]:left-[1.5%] min-[640px]:top-0",
   },
   {
     name: "Late Haji Noor Mustafa Mustafai",
     role: "Chairman",
-    image: "Late Haji Noor Mustafa Mustafai.png",
+    image: "Late Haji Noor Mustafa Mustafai.webp",
     width: 225, height: 297,
     position: "min-[640px]:-right-[4%] min-[640px]:top-[39%]",
   },
@@ -25,7 +25,7 @@ export default function HistorySection() {
     <section id="history" aria-labelledby="history-title" className="relative isolate overflow-hidden bg-white">
       <div className="relative mx-auto max-w-[1280px] px-[6.3%] pt-[clamp(28px,8vw,44px)] pb-[7%] min-[640px]:px-[5.7%] min-[640px]:pt-[4.8%] min-[640px]:pb-[4.5%]">
         <div aria-hidden="true" className="pointer-events-none absolute top-[44%] -right-[15%] h-[45%] w-[130%] opacity-[0.36] min-[640px]:top-[12%] min-[640px]:right-[2%] min-[640px]:h-[73%] min-[640px]:w-[55%]">
-          <Image src="/media/background image of history and about us.png" alt="" fill className="object-contain" sizes="(max-width: 639px) 130vw, 55vw" />
+          <Image src="/media/background image of history and about us.webp" alt="" fill className="object-contain" sizes="(max-width: 639px) 130vw, 55vw" />
         </div>
         <div className="relative grid grid-cols-1 min-[640px]:grid-cols-[53%_47%]">
           <div>
