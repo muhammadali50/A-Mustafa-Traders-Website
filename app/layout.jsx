@@ -1,4 +1,5 @@
 import "./globals.css";
+import VisitorTracking from "../components/VisitorTracking";
 
 export const metadata = {
   title: "A. Mustafa Traders | Premium Rice, Trusted Quality",
@@ -6,5 +7,5 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  return <html lang="en"><body>{children}</body></html>;
+  return <html lang="en"><body>{children}<VisitorTracking /></body></html>;
 }

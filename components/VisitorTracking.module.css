@@ -1,0 +1,47 @@
+.popup {
+  position: fixed;
+  z-index: 60;
+  right: clamp(14px, 3vw, 32px);
+  bottom: clamp(14px, 3vw, 32px);
+  width: min(360px, calc(100vw - 28px));
+  padding: 24px;
+  border: 1px solid rgb(161 34 34 / 16%);
+  border-radius: 14px;
+  background: #fff;
+  color: #27321f;
+  box-shadow: 0 16px 48px rgb(20 25 18 / 24%);
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #575757;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.close:hover { background: #f5efeb; }
+.eyebrow { margin: 0 30px 6px 0; color: #a12222; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.title { margin: 0; color: #34532b; font-family: Georgia, "Times New Roman", serif; font-size: 25px; font-weight: 400; }
+.description { margin: 7px 0 17px; color: #555; font-size: 13px; line-height: 1.45; }
+.form { display: grid; gap: 7px; }
+.label { margin-top: 4px; color: #333; font-size: 12px; font-weight: 600; }
+.input { width: 100%; min-height: 40px; padding: 8px 10px; border: 1px solid #d6d0ca; border-radius: 6px; background: white; color: #222; font: inherit; font-size: 14px; }
+.input:focus { border-color: #a12222; outline: 2px solid rgb(161 34 34 / 18%); }
+.error { margin: 2px 0; color: #9d2020; font-size: 12px; line-height: 1.4; }
+.submit { min-height: 42px; margin-top: 7px; border: 0; border-radius: 6px; background: #a12222; color: white; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.submit:hover { background: #871b1b; }
+.submit:disabled { cursor: wait; opacity: .7; }
+.skip { display: block; margin: 10px auto 0; padding: 4px 8px; border: 0; background: transparent; color: #595959; font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.skip:hover, .close:hover { color: #a12222; }
+
+@media (max-width: 480px) {
+  .popup { right: 12px; bottom: 12px; width: calc(100vw - 24px); padding: 19px; }
+}
