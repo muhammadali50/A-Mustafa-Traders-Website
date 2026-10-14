@@ -12,6 +12,9 @@ const TRACKING_API_URL = process.env.NEXT_PUBLIC_VISITOR_TRACKING_API_URL;
 
 let activeVisit = null;
 let listenersAttached = false;
+let sectionObserver = null;
+let pendingSection = null;
+let pendingSectionTimer = null;
 
 function getVisitorKey() {
   try {
@@ -65,31 +68,55 @@ function send(payload, { beacon = false } = {}) {
   }
 }
 
-function finishVisit({ beacon = false } = {}) {
-  if (!activeVisit) return;
-  const durationSeconds = Math.max(0, Math.round((Date.now() - activeVisit.startedAt) / 1000));
-  if (durationSeconds > activeVisit.lastDurationSent) {
-    activeVisit.lastDurationSent = durationSeconds;
+function sendVisitDuration(visit, { beacon = false } = {}) {
+  if (!visit) return;
+  const now = Date.now();
+  const elapsedMs = visit.elapsedMs + (visit.activeSince === null ? 0 : Math.max(0, now - visit.activeSince));
+  const durationSeconds = Math.max(0, Math.round(elapsedMs / 1000));
+  if (durationSeconds > visit.lastDurationSent) {
+    visit.lastDurationSent = durationSeconds;
     send({
       action: "page_duration",
-      visitor_key: activeVisit.visitorKey,
-      page_visit_key: activeVisit.pageVisitKey,
-      page_url: activeVisit.pageUrl,
+      visitor_key: visit.visitorKey,
+      page_visit_key: visit.pageVisitKey,
+      page_url: visit.pageUrl,
       duration_seconds: durationSeconds,
     }, { beacon });
   }
 }
 
-function startVisit() {
+function finishVisit({ beacon = false } = {}) {
+  if (!activeVisit) return;
+  if (activeVisit.activeSince !== null) {
+    activeVisit.elapsedMs += Math.max(0, Date.now() - activeVisit.activeSince);
+    activeVisit.activeSince = null;
+  }
+  sendVisitDuration(activeVisit, { beacon });
+}
+
+function getSectionUrl(sectionId) {
+  const url = new URL(window.location.href);
+  url.hash = sectionId;
+  return url.href;
+}
+
+function trackVisit(pageUrl, sectionId = null) {
   if (typeof window === "undefined") return;
   const visitorKey = getVisitorKey();
   if (!visitorKey) return;
-  const pageUrl = window.location.href;
   if (activeVisit?.pageUrl === pageUrl) return;
 
   finishVisit();
   const pageVisitKey = window.crypto.randomUUID();
-  activeVisit = { visitorKey, pageVisitKey, pageUrl, startedAt: Date.now(), lastDurationSent: -1 };
+  activeVisit = {
+    visitorKey,
+    pageVisitKey,
+    pageUrl,
+    sectionId,
+    elapsedMs: 0,
+    activeSince: document.visibilityState === "visible" ? Date.now() : null,
+    lastDurationSent: -1,
+  };
   send({
     action: "page_view",
     visitor_key: visitorKey,
@@ -99,23 +126,116 @@ function startVisit() {
   });
 }
 
+function trackHashOrCurrentPage() {
+  if (typeof window === "undefined") return;
+  const hash = window.location.hash.slice(1);
+  let sectionId = hash;
+  try {
+    sectionId = decodeURIComponent(hash);
+  } catch {
+    // Ignore malformed hashes and fall back to page/viewport tracking.
+  }
+  const section = sectionId ? document.getElementById(sectionId) : null;
+  if (section?.matches("section[id]")) {
+    trackVisit(getSectionUrl(section.id), section.id);
+    return;
+  }
+
+  const hasSections = document.querySelector("main section[id]");
+  if (!hasSections || window.location.pathname !== "/") trackVisit(window.location.href);
+  else scheduleProminentSection(0);
+}
+
+function getProminentSection() {
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+  if (!viewportHeight || !viewportWidth) return null;
+
+  let prominent = null;
+  let largestVisibleArea = 0;
+  let nearestCenter = Infinity;
+  for (const section of document.querySelectorAll("main section[id]")) {
+    const rect = section.getBoundingClientRect();
+    const visibleHeight = Math.max(0, Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0));
+    const visibleWidth = Math.max(0, Math.min(rect.right, viewportWidth) - Math.max(rect.left, 0));
+    const visibleArea = visibleHeight * visibleWidth;
+    if (visibleArea < viewportHeight * viewportWidth * 0.2) continue;
+    const centerDistance = Math.abs((rect.top + rect.bottom) / 2 - viewportHeight / 2);
+    if (visibleArea > largestVisibleArea || (visibleArea === largestVisibleArea && centerDistance < nearestCenter)) {
+      prominent = section;
+      largestVisibleArea = visibleArea;
+      nearestCenter = centerDistance;
+    }
+  }
+  return prominent;
+}
+
+function scheduleProminentSection(delay = 450) {
+  if (document.visibilityState !== "visible") return;
+  const section = getProminentSection();
+  const sectionId = section?.id ?? null;
+  if (!sectionId || sectionId === activeVisit?.sectionId) {
+    if (pendingSectionTimer !== null) window.clearTimeout(pendingSectionTimer);
+    pendingSectionTimer = null;
+    pendingSection = null;
+    return;
+  }
+  if (sectionId === pendingSection) return;
+
+  pendingSection = sectionId;
+  if (pendingSectionTimer !== null) window.clearTimeout(pendingSectionTimer);
+  pendingSectionTimer = window.setTimeout(() => {
+    pendingSectionTimer = null;
+    const current = getProminentSection();
+    if (document.visibilityState === "visible" && current?.id === pendingSection) {
+      trackVisit(getSectionUrl(current.id), current.id);
+    }
+    pendingSection = null;
+  }, delay);
+}
+
+function observeSections() {
+  const sections = document.querySelectorAll("main section[id]");
+  if (!sections.length) return null;
+
+  if (typeof IntersectionObserver === "undefined") {
+    const onScroll = () => scheduleProminentSection();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return { disconnect: () => window.removeEventListener("scroll", onScroll) };
+  }
+
+  sectionObserver?.disconnect();
+  sectionObserver = new IntersectionObserver(() => scheduleProminentSection(), {
+    root: null,
+    threshold: [0, 0.1, 0.2, 0.35, 0.5, 0.7, 0.9, 1],
+  });
+  sections.forEach((section) => sectionObserver.observe(section));
+  return sectionObserver;
+}
+
 function handleVisibilityChange() {
   if (document.visibilityState === "hidden") finishVisit({ beacon: true });
+  else if (activeVisit && activeVisit.activeSince === null) activeVisit.activeSince = Date.now();
+  else scheduleProminentSection(0);
 }
 
 function handlePageHide() {
   finishVisit({ beacon: true });
   activeVisit = null;
+  pendingSection = null;
+  if (pendingSectionTimer !== null) window.clearTimeout(pendingSectionTimer);
+  pendingSectionTimer = null;
 }
 
 function attachTrackingListeners() {
   if (listenersAttached) return;
   listenersAttached = true;
-  window.addEventListener("hashchange", startVisit);
-  window.addEventListener("popstate", startVisit);
-  window.addEventListener("pageshow", startVisit);
+  window.addEventListener("hashchange", trackHashOrCurrentPage);
+  window.addEventListener("popstate", trackHashOrCurrentPage);
+  window.addEventListener("pageshow", trackHashOrCurrentPage);
   window.addEventListener("pagehide", handlePageHide);
   document.addEventListener("visibilitychange", handleVisibilityChange);
+  window.addEventListener("resize", () => scheduleProminentSection());
 }
 
 function EmailCapturePopup() {
@@ -215,7 +335,9 @@ export default function VisitorTracking() {
 
   useEffect(() => {
     attachTrackingListeners();
-    startVisit();
+    const observer = observeSections();
+    trackHashOrCurrentPage();
+    return () => observer?.disconnect();
   }, [pathname]);
 
   return <EmailCapturePopup />;

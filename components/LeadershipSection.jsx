@@ -1,4 +1,4 @@
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import localFont from "next/font/local";
 
 const headingFont = localFont({ src: "../public/fonts/lobster.ttf", weight: "400", display: "swap" });
@@ -23,7 +23,7 @@ export default function LeadershipSection() {
               <div className="relative mx-auto aspect-[110/165] w-[76%]">
                 <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[90%] rounded-t-full bg-[#a12222]" />
                 {/* The source files have transparent side margins; sizing by height preserves each portrait. */}
-                <Image src={`/media/${leader.image}`} alt={leader.name} width={leader.width} height={leader.height} className="absolute bottom-0 left-1/2 h-full w-auto max-w-none -translate-x-1/2 object-contain" sizes="(max-width: 639px) 60vw, 20vw" />
+                <OptimizedImage src={`/media/${leader.image}`} alt={leader.name} width={leader.width} height={leader.height} className="absolute bottom-0 left-1/2 h-full w-auto max-w-none -translate-x-1/2 object-contain" sizes="(max-width: 639px) 60vw, 20vw" />
               </div>
               <figcaption className="mt-[6%] bg-[#a12222] px-1 py-[3%] text-center text-[clamp(11px,3.3vw,14px)] leading-[1.12] font-bold text-white min-[640px]:text-[clamp(8px,1.2vw,15px)]">
                 <span className="block">{leader.name}</span>

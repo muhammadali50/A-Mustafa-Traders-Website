@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import Link from "next/link";
 
 const navigation = [
@@ -51,7 +51,7 @@ export default function Navbar() {
     <div className="sticky top-0 z-50 h-0">
     <header ref={headerRef} onFocusCapture={() => setScrolling(false)} data-scrolling={scrolling} className="site-header absolute z-20 bg-[#a12222] text-white transition-opacity duration-200 data-[scrolling=true]:pointer-events-none data-[scrolling=true]:opacity-0 motion-reduce:transition-none">
       <Link href="#home" onClick={closeMenu} aria-label="A. Mustafa Traders home" className="brand absolute">
-        <Image src="/media/AMT logo.webp" alt="AM Traders Nawabshah" width={1254} height={1254} loading="eager" className="h-full w-full object-contain" sizes="(max-width: 767px) 64px, 8vw" />
+        <OptimizedImage src="/media/AMT logo.webp" alt="AM Traders Nawabshah" width={1254} height={1254} loading="eager" className="h-full w-full object-contain" sizes="(max-width: 767px) 64px, 8vw" />
       </Link>
       <nav aria-label="Main navigation" className="desktop-navigation h-full">
         <ul className="flex h-full items-center justify-end"><NavigationItems /></ul>

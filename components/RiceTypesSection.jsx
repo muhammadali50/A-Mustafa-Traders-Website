@@ -1,4 +1,4 @@
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import localFont from "next/font/local";
 
 const distributorFont = localFont({ src: "../public/fonts/lobster.ttf", weight: "400", display: "swap" });
@@ -50,7 +50,7 @@ export default function RiceTypesSection() {
                 <figure className="m-0">
                   {/* Align the visible bowls while retaining every pixel of the original images. */}
                   <div className="relative mx-auto w-[86.8%] min-[640px]:w-[66%]" style={{ aspectRatio: `${width}/${height}` }}>
-                    <Image src={`/media/${image}`} alt={name} width={source[0]} height={source[1]}
+                    <OptimizedImage src={`/media/${image}`} alt={name} width={source[0]} height={source[1]}
                       sizes="(max-width: 639px) 36vw, (max-width: 1280px) 12vw, 153px"
                       className="absolute max-w-none object-contain"
                       style={{ width: `${source[0] / width * 100}%`, height: `${source[1] / height * 100}%`, left: `${-x / width * 100}%`, top: `${-y / height * 100}%` }} />
@@ -67,8 +67,8 @@ export default function RiceTypesSection() {
       <div aria-labelledby="distributors-title" className="mx-auto max-w-[1280px] px-[8%] pt-[8%] pb-[10%] min-[640px]:pt-[1%] min-[640px]:pb-[3.5%]">
         <h2 id="distributors-title" className={`${distributorFont.className} m-0 text-center text-[clamp(25px,7.5vw,40px)] leading-[1.2] font-normal text-[#ac3033] min-[640px]:text-[clamp(36px,5.6vw,68px)]`}>Distributors</h2>
         <div className="mt-[9%] flex items-center justify-center gap-[10%] min-[640px]:mt-[3%] min-[640px]:gap-[7%]">
-          <Image src="/media/Arshman Logo.webp" alt="Arshman Rice" width={1254} height={1254} className="h-auto w-[40%] object-contain min-[640px]:w-[16%]" sizes="(max-width: 639px) 34vw, (max-width: 1280px) 14vw, 180px" />
-          <Image src="/media/Mahmood Logo.webp" alt="Mahmood Rice" width={1254} height={1254} className="h-auto w-[40%] object-contain min-[640px]:w-[16%]" sizes="(max-width: 639px) 34vw, (max-width: 1280px) 14vw, 180px" />
+          <OptimizedImage src="/media/Arshman Logo.webp" alt="Arshman Rice" width={1254} height={1254} className="h-auto w-[40%] object-contain min-[640px]:w-[16%]" sizes="(max-width: 639px) 34vw, (max-width: 1280px) 14vw, 180px" />
+          <OptimizedImage src="/media/Mahmood Logo.webp" alt="Mahmood Rice" width={1254} height={1254} className="h-auto w-[40%] object-contain min-[640px]:w-[16%]" sizes="(max-width: 639px) 34vw, (max-width: 1280px) 14vw, 180px" />
         </div>
       </div>
     </section>

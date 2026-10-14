@@ -1,4 +1,4 @@
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import localFont from "next/font/local";
 
 const historyFont = localFont({ src: "../public/fonts/lobster.ttf", weight: "400", display: "swap" });
@@ -25,7 +25,7 @@ export default function HistorySection() {
     <section id="history" aria-labelledby="history-title" className="relative isolate overflow-hidden bg-white">
       <div className="relative mx-auto max-w-[1280px] px-[6.3%] pt-[clamp(28px,8vw,44px)] pb-[7%] min-[640px]:px-[5.7%] min-[640px]:pt-[4.8%] min-[640px]:pb-[4.5%]">
         <div aria-hidden="true" className="pointer-events-none absolute top-[44%] -right-[15%] h-[45%] w-[130%] opacity-[0.36] min-[640px]:top-[12%] min-[640px]:right-[2%] min-[640px]:h-[73%] min-[640px]:w-[55%]">
-          <Image src="/media/background image of history and about us.webp" alt="" fill className="object-contain" sizes="(max-width: 639px) 130vw, 55vw" />
+          <OptimizedImage src="/media/background image of history and about us.webp" alt="" fill className="object-contain" sizes="(max-width: 639px) 130vw, 55vw" />
         </div>
         <div className="relative grid grid-cols-1 min-[640px]:grid-cols-[53%_47%]">
           <div>
@@ -37,7 +37,7 @@ export default function HistorySection() {
           <div className="relative mt-[13%] flex flex-col items-center gap-[8vw] min-[640px]:mt-0 min-[640px]:block min-[640px]:min-h-[46vw] min-[1280px]:min-h-[589px]">
             {founders.map((founder) => (
               <figure key={founder.name} className={`relative m-0 w-[88%] min-[640px]:absolute min-[640px]:w-[49%] ${founder.position}`}>
-                <Image src={`/media/${founder.image}`} alt={founder.name} width={founder.width} height={founder.height} className="mx-auto h-auto w-[76%] object-contain" sizes="(max-width: 639px) 59vw, 16vw" />
+                <OptimizedImage src={`/media/${founder.image}`} alt={founder.name} width={founder.width} height={founder.height} className="mx-auto h-auto w-[76%] object-contain" sizes="(max-width: 639px) 59vw, 16vw" />
                 <figcaption className="mt-[3%] bg-[#9e2424] px-1 py-[2%] text-center text-[clamp(11px,3.7vw,18px)] leading-[1.12] font-bold text-white min-[640px]:text-[clamp(8px,1.23vw,15px)]">
                   <span className="block">{founder.name}</span>
                   <span className="block">{founder.role}</span>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import { products } from "../data/products";
 import styles from "./ProductsSection.module.css";
 
@@ -86,7 +86,7 @@ export default function ProductsSection() {
                   else move(offset < 0 ? -1 : 1);
                 }}>
                 <span className={styles.imageFrame} style={{ aspectRatio: `${width} / ${height}` }}>
-                  <Image src={`/media/${product.image}`} alt={`${product.name} — ${product.type}`} width={product.source[0]} height={product.source[1]} draggable={false} className="object-contain"
+                  <OptimizedImage src={`/media/${product.image}`} alt={`${product.name} — ${product.type}`} width={product.source[0]} height={product.source[1]} draggable={false} className="object-contain"
                     sizes="(max-width: 767px) 45vw, 30vw"
                     style={{ width: `${product.source[0] / width * 100}%`, height: `${product.source[1] / height * 100}%`, left: `${-left / width * 100}%`, top: `${-top / height * 100}%` }} />
                 </span>
