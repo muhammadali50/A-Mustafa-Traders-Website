@@ -1,40 +1,8 @@
 import OptimizedImage from "./OptimizedImage";
 import localFont from "next/font/local";
+import { riceVarieties } from "../data/rice-varieties";
 
 const distributorFont = localFont({ src: "../public/fonts/lobster.ttf", weight: "400", display: "swap" });
-
-const riceTypes = [
-  {
-    name: "1121 Steam Basmati Rice", lines: ["1121 Steam", "Basmati Rice"],
-    image: "1121 Steam Basmati rice.webp", source: [1122, 1402], bowl: [34, 166, 1009, 1004],
-    position: "left-[26%] top-[5.5%] min-[640px]:left-[12%] min-[640px]:top-[13%]",
-    color: "text-white",
-  },
-  {
-    name: "1121 Sella Basmati Rice", lines: ["1121 Sella", "Basmati Rice"],
-    image: "1121 Sella Basmati Rice.webp", source: [1122, 1402], bowl: [36, 170, 1027, 1021],
-    position: "left-[73%] top-[5.5%] min-[640px]:left-[30%] min-[640px]:top-[13%]",
-    color: "text-white",
-  },
-  {
-    name: "PK 386 Full Grain Rice", lines: ["PK 386 Full", "Grain Rice"],
-    image: "Pk-386 Full Grain Rice.webp", source: [1122, 1402], bowl: [38, 176, 1045, 1041],
-    position: "left-[26%] top-[35.4%] min-[640px]:left-[48.5%] min-[640px]:top-[13%]",
-    color: "text-white",
-  },
-  {
-    name: "Basmati White Rice", lines: ["Basmati", "White Rice"],
-    image: "basmati white rice.webp", source: [1122, 1402], bowl: [32, 162, 1000, 995],
-    position: "left-[73%] top-[35.4%] min-[640px]:left-[66.5%] min-[640px]:top-[13%]",
-    color: "text-white",
-  },
-  {
-    name: "Basmati Broken Rice", lines: ["Basmati", "Broken Rice"],
-    image: "basmati broken rice.webp", source: [1060, 1484], bowl: [22, 237, 1013, 1018],
-    position: "left-1/2 top-[64.3%] min-[640px]:left-[85%] min-[640px]:top-[13%]",
-    color: "text-[#b42125] min-[640px]:text-white",
-  },
-];
 
 export default function RiceTypesSection() {
   return (
@@ -43,7 +11,7 @@ export default function RiceTypesSection() {
       <div className="relative isolate mx-auto aspect-[328/492] w-full max-w-[1280px] min-[640px]:aspect-[744/220]">
         <div aria-hidden="true" className="absolute inset-x-[8.2%] top-[10.4%] bottom-[22.3%] -z-10 bg-[#9e2424] min-[640px]:inset-x-[5.9%] min-[640px]:top-[34%] min-[640px]:bottom-[11.4%]" />
         <ul className="m-0 list-none p-0">
-          {riceTypes.map(({ name, lines, image, source, bowl, position, color }, index) => {
+          {riceVarieties.map(({ name, lines, image, source, bowl, position, color }, index) => {
             const [x, y, width, height] = bowl;
             return (
               <li key={name} className={`absolute w-[38%] -translate-x-1/2 text-center min-[640px]:w-[18%] ${position}`}>
