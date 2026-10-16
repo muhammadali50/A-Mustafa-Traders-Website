@@ -1,5 +1,6 @@
 import "./globals.css";
 import VisitorTracking from "../components/VisitorTracking";
+import MicrosoftClarity from "../components/MicrosoftClarity";
 import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata = {
@@ -24,7 +25,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  return <html lang="en"><body>{children}<VisitorTracking /><GoogleAnalytics gaId="G-W8T0242VZ8" />
+  return <html lang="en"><body>{children}<VisitorTracking /><MicrosoftClarity /><GoogleAnalytics gaId="G-W8T0242VZ8" />
   </body></html>;
 }
 

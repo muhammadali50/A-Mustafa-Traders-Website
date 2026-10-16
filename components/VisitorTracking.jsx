@@ -312,7 +312,7 @@ function EmailCapturePopup() {
   if (!visible) return null;
 
   return (
-    <aside className={styles.popup} aria-label="Optional visitor details">
+    <aside className={styles.popup} aria-label="Optional visitor details" data-clarity-mask="true">
       <button className={styles.close} type="button" onClick={closePopup} aria-label="Close and skip">×</button>
       <p className={styles.eyebrow}>A. Mustafa Traders</p>
       <h2 className={styles.title}>Stay in touch</h2>

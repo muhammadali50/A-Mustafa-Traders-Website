@@ -21,7 +21,7 @@ export default function ContactSection() {
           <h2 id="contact-title" className={`${headingFont.className} text-[36px] leading-[1.1] font-normal min-[640px]:text-[clamp(28px,4vw,48px)]`}>Contact Us</h2>
           <p className="mt-1 text-[13px] font-bold min-[640px]:text-[clamp(9px,1.4vw,17px)]">We’d love to hear from you.</p>
           <p className="mx-auto mt-4 max-w-[350px] text-[12px] leading-[1.35] min-[640px]:mt-[3%] min-[640px]:max-w-none min-[640px]:text-[clamp(8px,1.05vw,13px)]">For rice orders, product information, pricing, or any other inquiry, feel free to contact A Mustafa Traders. Our team is always ready to assist you.</p>
-          <div className="mt-6 flex items-center justify-center gap-3 min-[640px]:mt-[6%] min-[640px]:gap-[2%]" aria-label="Social media and email">
+          <div className="mt-6 flex items-center justify-center gap-3 min-[640px]:mt-[6%] min-[640px]:gap-[2%]" aria-label="Social media and email" data-clarity-mask="true">
             {socialLinks.map(({ name, icon, href, newTab }) => {
               const className = "flex h-11 w-11 items-center justify-center rounded-lg min-[640px]:h-[clamp(32px,4.3vw,48px)] min-[640px]:w-[clamp(32px,4.3vw,48px)] transition-colors duration-200 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
               const graphic = <ContactIcon icon={icon} className="h-7 w-7 min-[640px]:h-[clamp(22px,3vw,36px)] min-[640px]:w-[clamp(22px,3vw,36px)]" />;
@@ -31,7 +31,7 @@ export default function ContactSection() {
         </div>
         <div className="mt-7 flex w-full max-w-[270px] flex-col gap-5 min-[640px]:mt-0 min-[640px]:w-[27%] min-[640px]:max-w-none min-[640px]:gap-[1.8vw]">
           {contacts.map((contact) => (
-            <a key={contact.phone} href={contact.href} aria-label={`Call ${contact.name} on ${contact.phone}`} className="flex min-h-[64px] items-center gap-2 rounded-xl bg-white px-3 py-2 text-[#a12222] transition-colors duration-200 hover:bg-[#fff2e9] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white min-[640px]:min-h-[44px] min-[640px]:gap-[5%] min-[640px]:rounded-lg min-[640px]:px-[6%] min-[640px]:py-[3%]">
+            <a key={contact.phone} href={contact.href} aria-label={`Call ${contact.name} on ${contact.phone}`} className="flex min-h-[64px] items-center gap-2 rounded-xl bg-white px-3 py-2 text-[#a12222] transition-colors duration-200 hover:bg-[#fff2e9] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white min-[640px]:min-h-[44px] min-[640px]:gap-[5%] min-[640px]:rounded-lg min-[640px]:px-[6%] min-[640px]:py-[3%]" data-clarity-mask="true">
               <ContactIcon icon="phone" className="h-8 w-8 shrink-0 min-[640px]:h-auto min-[640px]:w-[20%]" />
               <span className="min-w-0 flex-1 text-center leading-[1.2]">
                 <span className="block text-[12px] min-[640px]:text-[clamp(6px,.9vw,11px)]">{contact.name}</span>

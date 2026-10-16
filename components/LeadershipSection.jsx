@@ -19,7 +19,7 @@ export default function LeadershipSection() {
         </p>
         <div className="mt-7 grid grid-cols-1 justify-items-center gap-10 min-[640px]:mt-[2.7%] min-[640px]:grid-cols-3 min-[640px]:gap-[3%]">
           {leaders.map((leader) => (
-            <figure key={leader.name} className="m-0 w-[76%] max-w-[260px] min-[640px]:w-[72%] min-[640px]:max-w-none">
+            <figure key={leader.name} className="m-0 w-[76%] max-w-[260px] min-[640px]:w-[72%] min-[640px]:max-w-none" data-clarity-mask="true">
               <div className="relative mx-auto aspect-[110/165] w-[76%]">
                 <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[90%] rounded-t-full bg-[#a12222]" />
                 {/* The source files have transparent side margins; sizing by height preserves each portrait. */}
