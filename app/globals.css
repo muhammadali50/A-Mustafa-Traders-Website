@@ -178,7 +178,8 @@
   .hero-copy h1 span + span { margin-top: 0; font-size: 1.12em; line-height: 1.08; }
   .hero-description { margin: 12px auto 0; max-width: 330px; font-size: clamp(14px, 3.9vw, 17px); line-height: 1.35; text-wrap: balance; }
   .hero-description br { display: none; }
-  .hero-actions { justify-content: center; margin: 18px auto 0; }
+  .hero-actions { justify-content: center; margin: 22px auto 0; }
+  .hero-actions .btn { min-height: 48px; padding-inline: 28px; }
   .product-composition { --w: min(300px, 76vw); position: relative; inset: auto; flex-shrink: 0; height: auto; aspect-ratio: 1.25; margin: clamp(56px, 12svh, 96px) auto 0; }
   .rice-bag { width: 72%; left: 36%; top: -16%; }
   .rice-bowl { width: 69%; left: 11%; top: -30%; }
