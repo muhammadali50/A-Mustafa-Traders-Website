@@ -1,74 +1,88 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import OptimizedImage from "./OptimizedImage";
-import Link from "next/link";
+import { navigation } from "../data/navigation";
 
-const navigation = [
-  { label: "Home", href: "#home", ready: true },
-  { label: "Products", href: "#products", ready: true },
-  { label: "Rice Varieties", href: "/rice-varieties", ready: true },
-  { label: "History", href: "#history", ready: true },
-  { label: "Our Leadership", href: "#leadership", ready: true },
-  { label: "About Us", href: "#about", ready: true },
-  { label: "Contact Us", href: "#contact", ready: true },
-];
+// Ignore jitter from trackpads/touch momentum; a deliberate scroll easily exceeds this.
+const DIRECTION_THRESHOLD = 8;
+const TOP_ZONE = 16;
 
-function NavigationItems({ onNavigate, pathname }) {
-  return navigation.map(({ label, href, ready }) => (
+function NavigationItems({ pathname, onNavigate }) {
+  return navigation.map(({ label, href }) => (
     <li key={href}>
-      {ready ? (
-        <a href={href.startsWith("#") && pathname !== "/" ? `/${href}` : href} onClick={onNavigate} className="nav-item">{label}</a>
-      ) : (
-        <span role="link" aria-disabled="true" title={`${label} — coming soon`} className="nav-item cursor-default">{label}</span>
-      )}
+      <Link href={href} onClick={onNavigate} aria-current={pathname === href ? "page" : undefined} className="nav-item">{label}</Link>
     </li>
   ));
 }
 
 export default function Navbar() {
   const pathname = usePathname();
+  const shellRef = useRef(null);
   const menuRef = useRef(null);
-  const headerRef = useRef(null);
-  const [scrolling, setScrolling] = useState(false);
 
   useEffect(() => {
-    let idleTimer;
-    function onScroll() {
-      clearTimeout(idleTimer);
-      const keepVisible = window.scrollY <= 8 || menuRef.current?.open || headerRef.current?.querySelector(":focus-visible");
-      setScrolling(!keepVisible);
-      idleTimer = setTimeout(() => setScrolling(false), 250);
+    const shell = shellRef.current;
+    let anchorY = window.scrollY;
+    let frame = 0;
+
+    // State lives in a data attribute rather than React state, so scrolling never re-renders.
+    const setState = (state) => { if (shell.dataset.state !== state) shell.dataset.state = state; };
+    // Keep the bar while its menu is open or a keyboard user is focused inside it.
+    const mustStayVisible = () => menuRef.current?.open || shell.querySelector(":focus-visible") !== null;
+
+    function update() {
+      frame = 0;
+      const y = Math.max(0, window.scrollY);
+      if (y <= TOP_ZONE) { setState("top"); anchorY = y; return; }
+      const delta = y - anchorY;
+      if (Math.abs(delta) < DIRECTION_THRESHOLD) return;
+      anchorY = y;
+      if (delta < 0 || mustStayVisible()) setState("pinned");
+      else setState("hidden");
     }
+    function onScroll() { if (!frame) frame = requestAnimationFrame(update); }
+
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      clearTimeout(idleTimer);
-    };
+    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(frame); };
   }, []);
-  function closeMenu() {
-    if (menuRef.current) menuRef.current.open = false;
-  }
+
+  // Close the mobile menu after navigation and when tapping/clicking outside it.
+  useEffect(() => { if (menuRef.current) menuRef.current.open = false; }, [pathname]);
+  useEffect(() => {
+    function onPointerDown(event) {
+      if (menuRef.current?.open && !menuRef.current.contains(event.target)) menuRef.current.open = false;
+    }
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, []);
+
+  function closeMenu() { if (menuRef.current) menuRef.current.open = false; }
+  function reveal() { if (shellRef.current.dataset.state === "hidden") shellRef.current.dataset.state = "pinned"; }
+
   return (
-    <div className="sticky top-0 z-50 h-0">
-    <header ref={headerRef} onFocusCapture={() => setScrolling(false)} data-scrolling={scrolling} className="site-header absolute z-20 bg-[#a12222] text-white transition-opacity duration-200 data-[scrolling=true]:pointer-events-none data-[scrolling=true]:opacity-0 motion-reduce:transition-none">
-      <Link href={pathname === "/" ? "#home" : "/#home"} onClick={closeMenu} aria-label="A. Mustafa Traders home" className="brand absolute">
-        <OptimizedImage src="/media/AMT logo.webp" alt="AM Traders Nawabshah" width={1254} height={1254} loading="eager" className="h-full w-full object-contain" sizes="(max-width: 767px) 64px, 8vw" />
-      </Link>
-      <nav aria-label="Main navigation" className="desktop-navigation h-full">
-        <ul className="flex h-full items-center justify-end"><NavigationItems pathname={pathname} /></ul>
-      </nav>
-      <details ref={menuRef} onKeyDown={(event) => { if (event.key === "Escape") { closeMenu(); menuRef.current.querySelector("summary").focus(); } }} className="mobile-navigation relative ml-auto w-fit">
-        <summary aria-label="Toggle navigation menu" className="flex h-11 w-11 cursor-pointer list-none items-center justify-center">
-          <svg width="24" height="24" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.5" /></svg>
-        </summary>
-        <nav aria-label="Mobile navigation" className="absolute right-0 top-full w-56 bg-[#a12222] px-5 py-3 shadow-lg">
-          <ul className="flex flex-col gap-1"><NavigationItems pathname={pathname} onNavigate={closeMenu} /></ul>
+    <div ref={shellRef} className="site-header-shell" data-state="top">
+      <header className="site-header" onFocusCapture={reveal}>
+        <Link href="/" onClick={closeMenu} aria-label="A. Mustafa Traders — home" className="brand">
+          <OptimizedImage src="/media/AMT logo.webp" alt="" width={1020} height={1020} loading="eager" className="h-full w-full object-contain" sizes="(max-width: 1023px) 58px, 7.1vw" />
+        </Link>
+        <nav aria-label="Main" className="desktop-navigation">
+          <ul><NavigationItems pathname={pathname} /></ul>
         </nav>
-      </details>
-    </header>
+        <details ref={menuRef} className="mobile-navigation" onToggle={reveal}
+          onKeyDown={(event) => { if (event.key === "Escape" && menuRef.current.open) { closeMenu(); menuRef.current.querySelector("summary").focus(); } }}>
+          <summary aria-label="Menu">
+            <svg className="menu-open" width="24" height="24" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+            <svg className="menu-close" width="24" height="24" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+          </summary>
+          <nav aria-label="Main" className="mobile-panel">
+            <ul><NavigationItems pathname={pathname} onNavigate={closeMenu} /></ul>
+          </nav>
+        </details>
+      </header>
     </div>
   );
 }
-

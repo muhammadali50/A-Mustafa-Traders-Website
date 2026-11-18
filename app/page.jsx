@@ -1,11 +1,9 @@
-import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import ProductsSection from "../components/ProductsSection";
 import RiceTypesSection from "../components/RiceTypesSection";
 import HistorySection from "../components/HistorySection";
 import LeadershipSection from "../components/LeadershipSection";
 import AboutSection from "../components/AboutSection";
-import ContactSection from "../components/ContactSection";
 
 const businessStructuredData = {
   "@context": "https://schema.org",
@@ -48,15 +46,13 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(businessStructuredData).replace(/</g, "\\u003c") }}
       />
-      <main id="main-content" className="relative isolate min-h-svh overflow-clip bg-[#34532b]">
-        <Navbar />
+      <main id="main-content" className="relative isolate overflow-clip">
         <Hero />
         <ProductsSection />
         <RiceTypesSection />
         <HistorySection />
         <LeadershipSection />
         <AboutSection />
-        <ContactSection />
       </main>
     </>
   );

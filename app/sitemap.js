@@ -1,15 +1,14 @@
+import { navigation } from "../data/navigation";
+import { SITE_URL } from "../data/seo-metadata";
+
 export const dynamic = "force-static";
 
+const priority = { "/": 1, "/products": 0.9, "/rice-varieties": 0.9, "/contact": 0.8 };
+
 export default function sitemap() {
-  return [
-    {
-      url: "https://www.amustafatraders.com",
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    { url: "https://www.amustafatraders.com/rice-varieties", changeFrequency: "monthly", priority: 0.9 },
-    { url: "https://www.amustafatraders.com/rice-products", changeFrequency: "monthly", priority: 0.8 },
-    { url: "https://www.amustafatraders.com/our-story", changeFrequency: "yearly", priority: 0.6 },
-    { url: "https://www.amustafatraders.com/contact", changeFrequency: "yearly", priority: 0.7 },
-  ];
+  return navigation.map(({ href }) => ({
+    url: href === "/" ? SITE_URL : `${SITE_URL}${href}`,
+    changeFrequency: href === "/" || href === "/products" || href === "/rice-varieties" ? "monthly" : "yearly",
+    priority: priority[href] ?? 0.7,
+  }));
 }

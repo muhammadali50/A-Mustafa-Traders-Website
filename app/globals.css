@@ -5,59 +5,206 @@
   --font-serif: Georgia, "Times New Roman", serif;
 }
 
-body { margin: 0; font-family: var(--font-sans); }
-html { scroll-behavior: smooth; }
-/* Include the header's original inset and the logo extending below the bar. */
-section[id] { scroll-margin-top: calc(7.8svh + max(44px, 22px + 3.56vw) + 16px); }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-a:focus-visible, summary:focus-visible { outline: 3px solid #ffb743; outline-offset: 5px; }
-.site-header { top: 7.8svh; left: 3.17%; width: 93.66%; height: 44px; }
-.brand { left: 4.2%; top: 50%; width: 7.6%; aspect-ratio: 1; transform: translateY(-50%); }
-.desktop-navigation { padding-right: 6%; padding-left: 20%; }
-.desktop-navigation ul { gap: 20px; }
-.nav-item { display: block; white-space: nowrap; font-size: 14px; line-height: 20px; font-weight: 500; text-transform: uppercase; }
-.mobile-navigation { display: none; }
-.hero { isolation: isolate; }
-.hero-background { object-position: center; }
-.hero-shade { background: linear-gradient(90deg, rgb(14 23 17 / 18%) 0%, rgb(14 23 17 / 7%) 35%, transparent 66%); }
-.hero-copy { left: 5.8%; top: 38.8svh; }
-.hero-copy h1 { margin: 0; font-size: clamp(40px, 5.88vw, 100px); line-height: 1.06; letter-spacing: .005em; }
-.hero-copy h1 span + span { font-size: 1.08em; line-height: .98; }
-.hero-description { margin: 12px 0 0 .9vw; font-size: clamp(14px, 1.8vw, 26px); line-height: 1.32; }
-/* Placement includes the original transparent padding in both product assets. */
-.product-composition { left: 63.5%; top: 18.6svh; width: 33%; height: 72svh; }
-.rice-bag { left: 28%; top: 0; width: 87%; }
-.rice-bowl { left: 0; top: -2.1vw; width: 74%; }
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  .desktop-navigation { padding-right: 4%; padding-left: 17%; }
-  .desktop-navigation ul { gap: 14px; }
-  .desktop-navigation .nav-item { font-size: 12px; }
+/* next/font sets the variables on <html>; `inline` keeps the utilities pointing at them. */
+@theme inline {
+  --font-display: var(--font-amt-display), Georgia, serif;
+  --font-script: var(--font-amt-script), "Segoe Script", cursive;
 }
 
-@media (min-width: 768px) and (max-aspect-ratio: 4/3) {
-  .hero-copy { top: 32svh; }
-  .product-composition { top: 47svh; left: 48%; width: 46%; }
+:root {
+  --brand-red: #9e2424;
+  --brand-red-strong: #a12222;
+  --brand-red-text: #ac3033;
+  --brand-red-deep: #7a1b1b;
+  --brand-cream: #fae9df;
+  --brand-gold: #ffb743;
+  --brand-stone: #dedbd8;
+
+  --container: 1280px;
+  --gutter: clamp(16px, 5.5vw, 80px);
+  --section-y: clamp(44px, 6vw, 96px);
+
+  --fs-display: clamp(2.125rem, 1.45rem + 3.1vw, 4.25rem);
+  --fs-title: clamp(1.375rem, 1.1rem + 1.1vw, 2rem);
+  --fs-lead: clamp(1rem, 0.86rem + 0.62vw, 1.5rem);
+  --fs-body: clamp(0.9375rem, 0.89rem + 0.22vw, 1.0625rem);
+  --fs-small: clamp(0.8125rem, 0.79rem + 0.12vw, 0.9375rem);
+
+  /*
+   * Floating header geometry, shared by the header and by page offsets. The round logo is taller
+   * than the bar and overhangs it by --logo-overhang above and below, so every resting position
+   * of the bar keeps at least that much room (+ breathing space) above it.
+   */
+  --header-h: 44px;
+  --logo-size: clamp(60px, 7.1vw, 118px);
+  --logo-overhang: calc((var(--logo-size) - var(--header-h)) / 2);
+  --header-top: max(calc(var(--logo-overhang) + 10px), clamp(16px, 7.8svh, 96px));
+  --header-gap: calc(var(--logo-overhang) + 10px);
+  --header-clearance: calc(var(--header-top) + var(--header-h) + var(--logo-overhang));
+}
+
+@media (max-width: 1023px) {
+  :root { --logo-size: 58px; --header-top: max(calc(var(--logo-overhang) + 8px), clamp(14px, 3.4svh, 27px)); --header-gap: calc(var(--logo-overhang) + 8px); }
+}
+
+/* Layered so Tailwind utilities (e.g. `max-w-none`, `mt-*`) can override these defaults. */
+@layer base {
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  /*
+   * Short pages: the main area absorbs leftover height so the footer keeps its natural size and
+   * nothing blank shows below it. A page that is only an intro banner lets the banner fill it.
+   */
+  body { display: flex; flex-direction: column; min-height: 100svh; margin: 0; font-family: var(--font-sans); background: #fff; color: #1f1f1f; overflow-wrap: break-word; }
+  body > main { flex-grow: 1; }
+  body > main:has(> .page-hero:only-child) { display: flex; flex-direction: column; }
+  body > main > .page-hero:only-child { flex-grow: 1; }
+  img { max-width: 100%; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  :where(a, button, summary, [tabindex]):focus-visible { outline: 3px solid var(--brand-gold); outline-offset: 4px; border-radius: 4px; }
+}
+
+/* Headings/anchors land below the floating header even when it is shown on the way up. */
+:target, section[id] { scroll-margin-top: calc(var(--header-gap) + var(--header-h) + var(--logo-overhang) + 16px); }
+
+
+.skip-link { position: fixed; left: 16px; top: 12px; z-index: 100; padding: 10px 16px; border-radius: 8px; background: #fff; color: var(--brand-red); font-weight: 700; transform: translateY(-200%); }
+.skip-link:focus-visible { transform: none; }
+
+/* ---------- Layout primitives (component layer: utilities still win) ---------- */
+@layer components {
+  .page-container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); box-sizing: border-box; }
+  .section-pad { padding-block: var(--section-y); }
+  .heading-display { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: var(--fs-display); line-height: 1.15; }
+  .heading-title { margin: 0; font-weight: 700; font-size: var(--fs-title); line-height: 1.25; }
+  .text-lead { font-size: var(--fs-lead); line-height: 1.4; }
+  .text-body { font-size: var(--fs-body); line-height: 1.6; }
+  .text-pretty { text-wrap: pretty; }
+
+  /*
+   * Button system. Primary = filled (red on light backgrounds), light = filled (white on red
+   * backgrounds), outline = secondary action. `.btn-arrow` adds the shared arrow treatment.
+   * Every variant has a 2px border so hover can transition border colour without a size change.
+   */
+  .btn { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; gap: 10px; padding: 10px 24px; border: 2px solid transparent; border-radius: 999px; font-family: var(--font-sans); font-size: clamp(.875rem, .84rem + .15vw, 1rem); font-weight: 700; line-height: 1.2; letter-spacing: .02em; text-align: center; text-decoration: none; cursor: pointer; transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease; }
+  .btn:focus-visible { outline: 3px solid var(--brand-gold); outline-offset: 3px; border-radius: 999px; }
+  .btn-primary { background: var(--brand-red); border-color: var(--brand-red); color: #fff; }
+  .btn-primary:hover { background: #fff; color: var(--brand-red); }
+  .btn-light { background: var(--brand-cream); border-color: var(--brand-cream); color: var(--brand-red); }
+  .btn-light:hover { background: transparent; color: var(--brand-cream); }
+  .btn-outline { background: transparent; border-color: currentColor; color: inherit; }
+  .btn-outline:hover { background: #fff; border-color: #fff; color: var(--brand-red); }
+  .btn-arrow::after { content: "→"; font-size: 1.1em; line-height: 1; transition: transform 220ms ease; }
+  .btn-arrow:hover::after { transform: translateX(4px); }
+  @media (prefers-reduced-motion: reduce) { .btn, .btn-arrow::after { transition: none; } }
+  /* Bottom-right action row used by homepage preview sections. */
+  .section-actions { display: flex; justify-content: flex-end; }
+
+  .card { background: #fff; border-radius: 18px; box-shadow: 0 1px 2px rgb(0 0 0 / 6%), 0 10px 28px rgb(84 20 20 / 8%); }
+}
+
+/* ---------- Header ---------- */
+.site-header-shell {
+  position: fixed; inset: 0 0 auto; z-index: 50; pointer-events: none;
+  padding-top: var(--header-top);
+  /* Room for the logo hanging below the bar, so "hidden" moves it fully out of view. */
+  padding-bottom: calc(var(--logo-overhang) + 6px);
+  transition: transform 320ms cubic-bezier(.22, .61, .36, 1);
+  will-change: transform;
+}
+.site-header-shell[data-state="pinned"] { transform: translateY(calc(var(--header-gap) - var(--header-top))); }
+.site-header-shell[data-state="hidden"] { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) { .site-header-shell { transition-duration: 1ms; } }
+
+.site-header { position: relative; pointer-events: auto; display: flex; align-items: center; width: 93.66%; max-width: 2400px; height: var(--header-h); margin-inline: auto; background: var(--brand-red-strong); color: #fff; box-shadow: 0 6px 18px rgb(0 0 0 / 0%); transition: box-shadow 300ms; }
+.site-header-shell[data-state="pinned"] .site-header { box-shadow: 0 6px 18px rgb(0 0 0 / 18%); }
+.brand { position: absolute; left: 4.2%; top: 50%; width: var(--logo-size); aspect-ratio: 1; transform: translateY(-50%); border-radius: 50%; }
+
+.desktop-navigation { display: flex; height: 100%; flex: 1; justify-content: flex-end; padding-right: clamp(16px, 4vw, 96px); padding-left: calc(4.2% + var(--logo-size) + 24px); }
+.desktop-navigation ul { display: flex; height: 100%; align-items: center; gap: clamp(12px, 1.5vw, 32px); margin: 0; padding: 0; list-style: none; }
+.nav-item { position: relative; display: block; white-space: nowrap; font-size: clamp(13px, .62rem + .3vw, 16px); line-height: 20px; font-weight: 500; text-transform: uppercase; letter-spacing: .02em; color: inherit; text-decoration: none; transition: color 200ms; }
+.desktop-navigation .nav-item { padding-block: 12px; }
+.desktop-navigation .nav-item::after { content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 2px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 200ms; }
+.desktop-navigation .nav-item:hover, .desktop-navigation .nav-item[aria-current="page"] { color: var(--brand-gold); }
+.desktop-navigation .nav-item:hover::after, .desktop-navigation .nav-item[aria-current="page"]::after { transform: scaleX(1); }
+
+.mobile-navigation { display: none; position: relative; margin-left: auto; margin-right: 6px; }
+.mobile-navigation summary { display: flex; width: 44px; height: 44px; cursor: pointer; list-style: none; align-items: center; justify-content: center; }
+.mobile-navigation summary::-webkit-details-marker { display: none; }
+.mobile-navigation .menu-close { display: none; }
+.mobile-navigation[open] .menu-open { display: none; }
+.mobile-navigation[open] .menu-close { display: block; }
+.mobile-panel { position: absolute; right: -6px; top: calc(100% + 0px); width: min(260px, calc(100vw - 32px)); padding: 10px 14px 14px; background: var(--brand-red-strong); box-shadow: 0 14px 30px rgb(0 0 0 / 25%); border-radius: 0 0 12px 12px; }
+.mobile-panel ul { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.mobile-panel .nav-item { padding: 12px 10px; font-size: 15px; border-radius: 6px; transition: color 200ms, background-color 200ms; }
+.mobile-panel .nav-item:is(:hover, :focus-visible, [aria-current="page"]) { background-color: #fff; color: var(--brand-red-strong); }
+
+@media (max-width: 1023px) {
+  .site-header { width: calc(100% - 32px); }
+  .brand { left: 12px; }
+  .desktop-navigation { display: none; }
+  .mobile-navigation { display: block; }
+}
+
+/* ---------- Home hero ---------- */
+.hero { position: relative; isolation: isolate; min-height: max(100svh, 520px); overflow: clip; }
+.hero-background { object-position: center; }
+.hero-shade { background: linear-gradient(90deg, rgb(14 23 17 / 30%) 0%, rgb(14 23 17 / 10%) 38%, transparent 66%); }
+.hero-copy { position: absolute; z-index: 10; left: 5.8%; top: max(38.8svh, calc(var(--header-clearance) + 24px)); max-width: 52%; }
+.hero-copy h1 { margin: 0; font-size: clamp(40px, 5.88vw, 100px); line-height: 1.06; letter-spacing: .005em; text-shadow: 0 2px 18px rgb(0 0 0 / 22%); }
+.hero-copy h1 span + span { font-size: 1.08em; line-height: .98; }
+.hero-description { margin: 12px 0 0 .9vw; font-size: clamp(15px, 1.8vw, 26px); line-height: 1.32; text-shadow: 0 1px 10px rgb(0 0 0 / 30%); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: clamp(18px, 2.4vw, 36px) 0 0 .9vw; }
+/*
+ * Product composition: width follows the viewport width but is capped by its height,
+ * so the bag and bowl never overflow short laptop screens. Height ≈ 1.25 × width
+ * (bowl is the tallest piece); it is vertically centred in the hero below the header.
+ */
+.product-composition { --w: min(33vw, 58svh); position: absolute; left: 63.5%; width: var(--w); height: calc(var(--w) * 1.25); top: max(calc(var(--header-clearance) + 8px), calc(55svh - var(--w) * .6)); }
+.rice-bag { left: 28%; top: 0; width: 87%; }
+.rice-bowl { left: 0; top: calc(var(--w) * -.064); width: 74%; }
+
+/* Portrait tablets: copy on top, composition below it. */
+@media (min-width: 768px) and (max-width: 1023px) and (max-aspect-ratio: 4/3) {
+  .hero-copy { top: max(28svh, calc(var(--header-clearance) + 40px)); max-width: 80%; }
+  .product-composition { --w: min(46vw, 38svh); left: 48%; top: auto; bottom: max(4svh, 24px); }
 }
 
 @media (max-width: 767px) {
-  section[id] { scroll-margin-top: 88px; }
-  .site-header { @apply absolute flex items-center px-2; top: 27px; left: 2.5%; width: 95%; height: 36px; }
-  .brand { left: 7%; width: 54px; }
-  .desktop-navigation { display: none; }
-  .mobile-navigation { display: block; }
-  .mobile-navigation .nav-item { padding: 12px 8px; font-size: 14px; border-radius: 6px; transition: color 200ms, background-color 200ms; }
-  .mobile-navigation a.nav-item:is(:hover, :focus-visible, :active) { background-color: white; color: #a12222; }
-  summary::-webkit-details-marker { display: none; }
-  .hero { @apply flex flex-col items-center; min-height: 100svh; padding: clamp(176px, 25svh, 240px) 16px 30px; }
+  .hero { display: flex; flex-direction: column; align-items: center; min-height: 100svh; padding: calc(var(--header-clearance) + clamp(40px, 9svh, 96px)) 16px 32px; box-sizing: border-box; }
   .hero-background { object-position: calc(50% + 85px) center; }
-  .hero-shade { background: linear-gradient(90deg, rgb(14 23 17 / 10%), rgb(14 23 17 / 3%) 35%, transparent 66%); }
-  .hero-copy { @apply relative inset-auto w-full text-center; max-width: 440px; }
-  .hero-copy h1 { font-size: clamp(30px, 9.2vw, 44px); line-height: 1.08; }
-  .hero-copy h1 span + span { margin-top: 0; font-size: 1.16em; line-height: 1.08; color: #a12222; }
-  .hero-description { margin: 12px auto 0; max-width: 330px; font-size: clamp(13px, 3.45vw, 16px); line-height: 1.3; text-wrap: balance; }
+  .hero-shade { background: linear-gradient(180deg, rgb(14 23 17 / 30%), rgb(14 23 17 / 8%) 55%, transparent); }
+  .hero-copy { position: relative; inset: auto; width: 100%; max-width: 440px; text-align: center; }
+  .hero-copy h1 { font-size: clamp(32px, 9.6vw, 46px); line-height: 1.08; }
+  .hero-copy h1 span + span { margin-top: 0; font-size: 1.12em; line-height: 1.08; }
+  .hero-description { margin: 12px auto 0; max-width: 330px; font-size: clamp(14px, 3.9vw, 17px); line-height: 1.35; text-wrap: balance; }
   .hero-description br { display: none; }
-  .product-composition { @apply relative inset-auto shrink-0; width: min(310px, 80vw); height: auto; aspect-ratio: 1.25; margin: 0 auto; }
+  .hero-actions { justify-content: center; margin: 18px auto 0; }
+  .product-composition { --w: min(300px, 76vw); position: relative; inset: auto; flex-shrink: 0; height: auto; aspect-ratio: 1.25; margin: clamp(56px, 12svh, 96px) auto 0; }
   .rice-bag { width: 72%; left: 36%; top: -16%; }
   .rice-bowl { width: 69%; left: 11%; top: -30%; }
 }
+
+/* ---------- Home rice varieties ---------- */
+.varieties { --cols: 2; --gap: clamp(16px, 4vw, 24px); --plate: clamp(104px, 30vw, 150px); --lift: calc(var(--plate) / 2); padding-top: calc(var(--lift) + clamp(32px, 5vw, 64px)); }
+.varieties-panel { background: var(--brand-red); padding: 0 clamp(12px, 3vw, 40px) clamp(24px, 3vw, 40px); }
+.varieties-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(24px, 3vw, 32px) var(--gap); margin: 0; padding: 0; list-style: none; }
+.varieties-grid > li { width: calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols)); text-align: center; }
+.variety-plate { position: relative; width: var(--plate); max-width: 100%; margin-inline: auto; }
+.varieties-grid > li:nth-child(-n + 2) .variety-plate { margin-top: calc(var(--lift) * -1); }
+.variety-label { margin-top: 12px; color: #fff; font-size: clamp(14px, .8rem + .35vw, 19px); font-weight: 700; line-height: 1.3; }
+@media (min-width: 600px) {
+  .varieties { --cols: 3; --plate: clamp(120px, 19vw, 160px); }
+  .varieties-grid > li:nth-child(-n + 3) .variety-plate { margin-top: calc(var(--lift) * -1); }
+}
+@media (min-width: 900px) {
+  .varieties { --cols: 5; --plate: clamp(120px, 12vw, 170px); }
+  .varieties-grid > li:nth-child(-n + 5) .variety-plate { margin-top: calc(var(--lift) * -1); }
+}
+
+/* ---------- Inner pages ---------- */
+.page-hero { position: relative; isolation: isolate; overflow: clip; background: linear-gradient(180deg, var(--brand-red-deep) 0%, var(--brand-red) 70%); color: #fff; padding-top: calc(var(--header-clearance) + clamp(28px, 5vw, 64px)); padding-bottom: clamp(36px, 5vw, 72px); }
+.page-hero::after { content: ""; position: absolute; inset: auto -10% -1px; height: 40%; z-index: -1; background: radial-gradient(60% 100% at 50% 100%, rgb(255 255 255 / 7%), transparent 70%); }
+.breadcrumb { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 clamp(14px, 2vw, 24px); padding: 0; list-style: none; font-size: var(--fs-small); color: rgb(255 255 255 / 85%); }
+.breadcrumb li + li::before { content: "/"; margin-right: 6px; opacity: .7; }
+.breadcrumb a { color: inherit; text-underline-offset: 4px; }
+

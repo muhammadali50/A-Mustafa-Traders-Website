@@ -1,50 +1,60 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const sharp = require('sharp');
+// Generates responsive WebP/AVIF width variants for every published WebP in public/media
+// and writes data/image-manifest.json, which components/OptimizedImage.jsx uses for srcset.
+//
+//   node scripts/optimize-images.cjs
+//
+// Variants are encoded from the original PNG/JPG next to the WebP when it exists (same
+// aspect ratio), otherwise from the WebP itself. The full-size WebP/AVIF files are kept as-is,
+// so printed packaging and logos are never re-encoded at their published size.
+// `sharp` ships with Next.js (optional dependency); install it explicitly if it is missing.
+const fs = require("node:fs");
+const path = require("node:path");
+const sharp = require("sharp");
+
+const ROOT = path.join(__dirname, "..");
+const MEDIA = path.join(ROOT, "public/media");
+const MANIFEST = path.join(ROOT, "data/image-manifest.json");
+const WIDTHS = [320, 640, 960];
+// Skip a variant unless it is meaningfully smaller than the published file.
+const MIN_GAIN = 0.8;
+const VARIANT = /-\d+w\.(webp|avif)$/;
+
+const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true })
+  .flatMap((entry) => entry.isDirectory() ? walk(path.join(dir, entry.name)) : [path.join(dir, entry.name)]);
+
+async function sourceFor(webp, width, height) {
+  for (const ext of [".png", ".jpg"]) {
+    const candidate = webp.replace(/\.webp$/, ext);
+    if (!fs.existsSync(candidate)) continue;
+    const meta = await sharp(candidate).metadata();
+    if (Math.abs(meta.width / meta.height - width / height) < 0.01) return candidate;
+  }
+  return webp;
+}
 
 async function main() {
-  const files = ['components', 'data'].flatMap(dir => fs.readdirSync(dir).filter(name => /\.(jsx|js)$/.test(name)).map(name => path.join(dir, name)));
-  const assets = new Set();
-  for (const file of files) {
-    const content = fs.readFileSync(file, 'utf8');
-    for (const match of content.matchAll(/"([^"\r\n]+\.(?:png|jpg|webp))"/g)) {
-      let asset = match[1].replace(/^\/media\//, '');
-      if (asset.endsWith('.webp')) {
-        const original = ['.png', '.jpg'].map(ext => asset.replace(/\.webp$/, ext)).find(name => fs.existsSync(path.join('public/media', name)));
-        if (original) asset = original;
-      }
-      if (fs.existsSync(path.join('public/media', asset))) assets.add(asset);
+  const manifest = {};
+  let written = 0;
+  const files = walk(MEDIA).filter((file) => file.endsWith(".webp") && !VARIANT.test(file)).sort();
+  for (const webp of files) {
+    const { width, height } = await sharp(webp).metadata();
+    const key = "/" + path.relative(path.join(ROOT, "public"), webp).split(path.sep).join("/");
+    const source = await sourceFor(webp, width, height);
+    const avif = webp.replace(/\.webp$/, ".avif");
+    if (!fs.existsSync(avif)) {
+      await sharp(source).resize({ width }).avif({ quality: 60, effort: 6 }).toFile(avif);
+      written++;
     }
-  }
-  let before = 0, after = 0;
-  const report = [];
-  for (const asset of assets) {
-    if (asset.endsWith('.webp')) continue;
-    const source = path.join('public/media', asset);
-    const output = source.replace(/\.(png|jpg)$/i, '.webp');
-    const background = asset.includes('Background');
-    let maxSize = background ? 1920 : 1200;
-    let buffer;
-    let quality = 82;
-    for (;;) {
-      buffer = await sharp(source).resize({ width: maxSize, height: maxSize, fit: 'inside', withoutEnlargement: true }).webp({ quality, effort: 6, alphaQuality: 90 }).toBuffer();
-      if (buffer.length <= 100 * 1024 || maxSize <= 700) break;
-      if (quality > 66) quality -= 8;
-      else { maxSize = Math.round(maxSize * .85); quality = 78; }
+    const widths = WIDTHS.filter((w) => w <= width * MIN_GAIN);
+    for (const w of widths) {
+      const base = webp.replace(/\.webp$/, `-${w}w`);
+      if (!fs.existsSync(`${base}.webp`)) { await sharp(source).resize({ width: w }).webp({ quality: 82, effort: 6, alphaQuality: 90 }).toFile(`${base}.webp`); written++; }
+      if (!fs.existsSync(`${base}.avif`)) { await sharp(source).resize({ width: w }).avif({ quality: 60, effort: 6 }).toFile(`${base}.avif`); written++; }
     }
-    fs.writeFileSync(output, buffer);
-    const original = fs.statSync(source).size;
-    before += original; after += buffer.length;
-    report.push({ asset, before: original, after: buffer.length });
+    manifest[key] = { width, height, widths };
   }
-  for (const file of files) {
-    const content = fs.readFileSync(file, 'utf8');
-    const updated = content.replace(/"([^"\r\n]+)\.(png|jpg)"/g, (full, name) => {
-      const asset = name.replace(/^\/media\//, '') + '.webp';
-      return fs.existsSync(path.join('public/media', asset)) ? '"' + name + '.webp"' : full;
-    });
-    if (updated !== content) fs.writeFileSync(file, updated);
-  }
-  console.log(JSON.stringify({ before, after, reduction: ((1-after/before)*100).toFixed(1)+'%', images: report }, null, 2));
+  fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 2) + "\n");
+  console.log(`${files.length} images in manifest, ${written} files written.`);
 }
-main().catch(error => { console.error(error); process.exitCode = 1; });
+
+main().catch((error) => { console.error(error); process.exitCode = 1; });

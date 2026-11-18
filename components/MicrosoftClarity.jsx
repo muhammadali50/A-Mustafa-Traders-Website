@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import Clarity from "@microsoft/clarity";
 
 const projectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID?.trim();
 const placeholderIds = new Set(["PASTE_YOUR_PROJECT_ID_HERE", "yourProjectId"]);
@@ -12,7 +11,8 @@ export default function MicrosoftClarity() {
     if (!projectId || placeholderIds.has(projectId) || initialized) return;
 
     initialized = true;
-    Clarity.init(projectId);
+    // Loaded on demand so the SDK is not part of the initial bundle (or shipped at all without an id).
+    import("@microsoft/clarity").then(({ default: Clarity }) => Clarity.init(projectId));
   }, []);
 
   return null;

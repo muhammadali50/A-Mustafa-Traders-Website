@@ -1,5 +1,7 @@
 Copyright 2013-2021 The The Nautigal Project Authors (https://github.com/googlefonts/the-nautigal)
 
+the-nautigal.woff2 is a Latin subset of The Nautigal, converted to WOFF2 for web delivery.
+
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
 https://scripts.sil.org/OFL
