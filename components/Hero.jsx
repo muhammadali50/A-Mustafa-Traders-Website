@@ -16,7 +16,8 @@ export default function Hero() {
         <p className="hero-description font-medium">Delivering carefully selected rice with<br /> quality, purity and trust from Nawabshah.</p>
         <div className="hero-actions">
           <ButtonLink href="/products">View our products</ButtonLink>
-          <ButtonLink href="/contact" variant="outline">Contact us</ButtonLink>
+          {/* Phones show a single CTA; Contact remains in the navigation and footer. */}
+          <ButtonLink href="/contact" variant="outline" className="max-[767px]:hidden">Contact us</ButtonLink>
         </div>
       </div>
       <div className="product-composition" role="img" aria-label="Punj Sher 5 kg rice bag beside a bowl of cooked rice">
