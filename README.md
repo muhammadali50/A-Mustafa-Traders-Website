@@ -27,8 +27,26 @@ The API receives `page_view` requests with a browser-generated `visitor_key`, a 
 
 The dashboard API must allow browser requests from `https://www.amustafatraders.com` and support JSON `POST` requests, including CORS preflight. The website does not connect to Supabase directly.
 
-## Pages and assets
+## Pages
 
-Only Home is implemented. The shared navigation preserves the planned page order; unfinished destinations are disabled until their pages are approved and built. Enable each entry in `components/Navbar.jsx` when its route is ready.
+| Route | Page |
+| --- | --- |
+| `/` | Home (hero, product carousel, previews of every section) |
+| `/products` | Full rice catalogue and distributors |
+| `/rice-varieties` | Rice varieties |
+| `/history` | History, founders, and milestones |
+| `/leadership` | Leadership team |
+| `/about` | About us and mission |
+| `/contact` | Contact options |
 
-The four Home images are copied unchanged into `public/media/`. Original assets remain in `media/`; unrelated files are not published. The background gradient is CSS only.
+The primary navigation lives in `data/navigation.js` and feeds the header and the sitemap. Every page ends with the shared "Contact Us" footer (`components/SiteFooter.jsx`). `/rice-products` and `/our-story` are former URLs that forward to `/products` and `/history`.
+
+## Images and fonts
+
+Published images live in `public/media/` as WebP + AVIF; original sources remain in `media/`. After adding or replacing a WebP, run:
+
+```sh
+node scripts/optimize-images.cjs
+```
+
+It writes 320/640/960 px WebP/AVIF variants and `data/image-manifest.json`, which `components/OptimizedImage.jsx` uses to build `srcset`. Brand fonts are Latin-only WOFF2 subsets in `app/fonts/` (see the OFL notes there), defined once in `app/fonts.js`.

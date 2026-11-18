@@ -4,8 +4,6 @@ export const riceVarieties = [
     lines: ["1121 Steam", "Basmati Rice"],
     image: "1121 Steam Basmati rice.webp",
     source: [1122, 1402], bowl: [34, 166, 1009, 1004],
-    position: "left-[26%] top-[5.5%] min-[640px]:left-[12%] min-[640px]:top-[13%]",
-    color: "text-white",
     description: "A steam rice option in our 1121 basmati selection.",
   },
   {
@@ -13,8 +11,6 @@ export const riceVarieties = [
     lines: ["1121 Sella", "Basmati Rice"],
     image: "1121 Sella Basmati Rice.webp",
     source: [1122, 1402], bowl: [36, 170, 1027, 1021],
-    position: "left-[73%] top-[5.5%] min-[640px]:left-[30%] min-[640px]:top-[13%]",
-    color: "text-white",
     description: "A sella rice option in our 1121 basmati selection.",
   },
   {
@@ -22,8 +18,6 @@ export const riceVarieties = [
     lines: ["PK 386 Full", "Grain Rice"],
     image: "Pk-386 Full Grain Rice.webp",
     source: [1122, 1402], bowl: [38, 176, 1045, 1041],
-    position: "left-[26%] top-[35.4%] min-[640px]:left-[48.5%] min-[640px]:top-[13%]",
-    color: "text-white",
     description: "A full grain rice variety in the A. Mustafa Traders range.",
   },
   {
@@ -31,8 +25,6 @@ export const riceVarieties = [
     lines: ["Basmati", "White Rice"],
     image: "basmati white rice.webp",
     source: [1122, 1402], bowl: [32, 162, 1000, 995],
-    position: "left-[73%] top-[35.4%] min-[640px]:left-[66.5%] min-[640px]:top-[13%]",
-    color: "text-white",
     description: "A white rice option within our basmati selection.",
   },
   {
@@ -40,8 +32,6 @@ export const riceVarieties = [
     lines: ["Basmati", "Broken Rice"],
     image: "basmati broken rice.webp",
     source: [1060, 1484], bowl: [22, 237, 1013, 1018],
-    position: "left-1/2 top-[64.3%] min-[640px]:left-[85%] min-[640px]:top-[13%]",
-    color: "text-[#b42125] min-[640px]:text-white",
     description: "A broken basmati rice option in our rice range.",
   },
 ];
