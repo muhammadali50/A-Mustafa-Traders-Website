@@ -3,10 +3,12 @@
 import { useRef, useState } from "react";
 import ButtonLink from "./ButtonLink";
 import OptimizedImage from "./OptimizedImage";
+import { useI18n } from "./LanguageProvider";
 import { products } from "../data/products";
 import styles from "./ProductsSection.module.css";
 
 export default function ProductsSection() {
+  const { t, dir, localize } = useI18n();
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(false);
   const gesture = useRef(null);
@@ -40,11 +42,13 @@ export default function ProductsSection() {
   return (
     <section id="products" aria-labelledby="products-title" className={styles.section}>
       <div className={styles.stage}>
-        <h2 id="products-title" className={styles.heading}>Products</h2>
-        <p aria-hidden="true" className={styles.signature}><span>A Mustafa</span> <span>Traders</span></p>
-        <div
+        <h2 id="products-title" className={styles.heading}>{t("productsSection.title")}</h2>
+        {/* Brand signature: decorative Latin script in both languages. */}
+        <p aria-hidden="true" lang="en" className={styles.signature}><span>A Mustafa</span> <span>Traders</span></p>
+        {/* The carousel keeps one physical composition (and swipe/arrow mapping) in both languages. */}
+        <div dir="ltr"
           className={`${styles.carousel} ${open ? styles.expanded : ""}`}
-          role="region" aria-roledescription="carousel" aria-label="Rice products" tabIndex={0}
+          role="region" aria-roledescription="carousel" aria-label={t("productsSection.carouselLabel")} tabIndex={0}
           onKeyDown={(event) => {
             if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
               event.preventDefault();
@@ -64,7 +68,8 @@ export default function ProductsSection() {
             if (Math.abs(event.deltaX) > 25 && Math.abs(event.deltaX) > Math.abs(event.deltaY)) move(event.deltaX > 0 ? 1 : -1);
           }}
         >
-          {products.map((product, index) => {
+          {products.map((source, index) => {
+            const product = localize("products", source);
             const half = Math.floor(products.length / 2);
             const distance = ((index - active + products.length + half) % products.length) - half;
             const offset = Math.max(-2, Math.min(2, distance));
@@ -73,14 +78,14 @@ export default function ProductsSection() {
             const [left, top, width, height] = product.crop;
             return (
               <div key={product.id} className={styles.slot} data-offset={offset} aria-hidden={!visible}>
-                <div id={`info-${product.id}`} role="region" aria-label={`${product.name} details`} aria-hidden={!isActive || !open}
+                <div id={`info-${product.id}`} role="region" aria-label={t("productsSection.details", { name: product.name })} aria-hidden={!isActive || !open} dir={dir}
                   className={`${styles.card} ${isActive && open ? styles.cardOpen : ""}`} style={{ backgroundColor: product.infoCardColor }}>
                   <h3>{product.name}</h3>
                   <p className={styles.type}>{product.type}</p>
                   <p>{product.description}</p>
                 </div>
                 <button type="button" className={styles.product} tabIndex={visible ? 0 : -1}
-                  aria-label={isActive ? `${open ? "Hide" : "Show"} ${product.name} details` : `Select ${product.name}, ${product.type}`}
+                  aria-label={isActive ? t(open ? "productsSection.hide" : "productsSection.show", { name: product.name }) : t("productsSection.select", product)}
                   aria-expanded={isActive ? open : undefined} aria-controls={isActive ? `info-${product.id}` : undefined}
                   onClick={() => {
                     if (suppressClick.current) { suppressClick.current = false; return; }
@@ -88,7 +93,7 @@ export default function ProductsSection() {
                     else move(offset < 0 ? -1 : 1);
                   }}>
                   <span className={styles.imageFrame} style={{ aspectRatio: `${width} / ${height}` }}>
-                    <OptimizedImage src={`/media/${product.image}`} alt={`${product.name} — ${product.type}`} width={product.source[0]} height={product.source[1]} draggable={false} className="object-contain"
+                    <OptimizedImage src={`/media/${product.image}`} alt={t("productsSection.imageAlt", product)} width={product.source[0]} height={product.source[1]} draggable={false} className="object-contain"
                       sizes="(max-width: 639px) 36vw, min(28vw, 470px)"
                       style={{ width: `${product.source[0] / width * 100}%`, height: `${product.source[1] / height * 100}%`, left: `${-left / width * 100}%`, top: `${-top / height * 100}%` }} />
                   </span>
@@ -97,11 +102,11 @@ export default function ProductsSection() {
             );
           })}
         </div>
-        <p className="sr-only" aria-live="polite">{products[active].name}, {products[active].type}. Product {active + 1} of {products.length}.</p>
-        <p className="sr-only">Swipe or drag in either direction, or use the arrow keys. Select the center bag for product details.</p>
+        <p className="sr-only" aria-live="polite">{t("productsSection.status", { ...localize("products", products[active]), index: active + 1, total: products.length })}</p>
+        <p className="sr-only">{t("productsSection.instructions")}</p>
         <div className={styles.footer}>
-          <p className={styles.hint} aria-hidden="true">Swipe Left</p>
-          <ButtonLink href="/products" variant="light" arrow className={styles.cta}>View all products</ButtonLink>
+          <p className={styles.hint} aria-hidden="true">{t("productsSection.hint")}</p>
+          <ButtonLink href="/products" variant="light" arrow className={styles.cta}>{t("productsSection.viewAll")}</ButtonLink>
         </div>
       </div>
     </section>

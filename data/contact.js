@@ -2,8 +2,8 @@ export const email = "amustafatraders786@gmail.com";
 export const whatsappHref = "https://wa.me/923717423270";
 
 export const contacts = [
-  { name: "Haji Meraj Ul Haq Mustafai", role: "CEO & Co-Owner", phone: "0333-7023270", href: "tel:+923337023270" },
-  { name: "Abdulhaq Mustafai", role: "Managing Director & Co-Owner", phone: "0312-4462201", href: "tel:+923124462201" },
+  { name: "Haji Meraj Ul Haq Mustafai", roleKey: "roles.ceo", phone: "0333-7023270", href: "tel:+923337023270" },
+  { name: "Abdulhaq Mustafai", roleKey: "roles.md", phone: "0312-4462201", href: "tel:+923124462201" },
 ];
 
 // Official social and email destinations.

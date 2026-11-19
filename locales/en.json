@@ -1,0 +1,185 @@
+{
+  "meta": {
+    "/": {
+      "title": "A. Mustafa Traders | Rice Supplier in Nawabshah, Pakistan",
+      "description": "Explore A. Mustafa Traders’ rice selection, including 1121 basmati, PK-386, sella, steam, white, and broken rice. Serving Nawabshah with quality and trust since 1948."
+    },
+    "/products": {
+      "title": "Rice Products and Brands | A. Mustafa Traders",
+      "description": "Browse the A. Mustafa Traders rice catalogue: basmati, steam, sella, white, and long-grain rice brands available through our Nawabshah business."
+    },
+    "/rice-varieties": {
+      "title": "Rice Varieties in Nawabshah | A. Mustafa Traders",
+      "description": "Explore the rice varieties listed by A. Mustafa Traders in Nawabshah, including 1121 steam and sella basmati, PK 386 full grain, white basmati, and broken basmati rice."
+    },
+    "/history": {
+      "title": "Our History | A. Mustafa Traders Since 1948",
+      "description": "The history of A. Mustafa Traders, a Nawabshah rice business founded in 1948 by Late Haji Muhammad Siddique and built on honesty, quality, and customer trust."
+    },
+    "/leadership": {
+      "title": "Our Leadership | A. Mustafa Traders",
+      "description": "Meet the leadership team of A. Mustafa Traders in Nawabshah, carrying forward the values of honesty, quality, and customer trust since 1948."
+    },
+    "/about": {
+      "title": "About Us | A. Mustafa Traders, Nawabshah",
+      "description": "A. Mustafa Traders is a trusted rice business serving Nawabshah since 1948, focused on quality, taste, fair prices, and customer satisfaction."
+    },
+    "/contact": {
+      "title": "Contact a Rice Supplier in Nawabshah | A. Mustafa Traders",
+      "description": "Contact A. Mustafa Traders in Nawabshah for rice orders, product information, availability, and pricing. Call our team, email us, or message us on WhatsApp."
+    },
+    "moved": { "title": "Moved | A. Mustafa Traders" }
+  },
+  "common": {
+    "skipToContent": "Skip to content",
+    "home": "Home",
+    "breadcrumb": "Breadcrumb",
+    "brandHome": "A. Mustafa Traders — home",
+    "menu": "Menu",
+    "mainNavigation": "Main",
+    "opensInNewTab": "{name} (opens in a new tab)",
+    "late": "Late {name}"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "nav": {
+    "/": "Home",
+    "/products": "Products",
+    "/rice-varieties": "Rice Varieties",
+    "/history": "History",
+    "/leadership": "Our Leadership",
+    "/about": "About Us",
+    "/contact": "Contact Us"
+  },
+  "hero": {
+    "titleLine1": "Premium Rice",
+    "titleLine2": "Trusted Quality",
+    "description": ["Delivering carefully selected rice with", "quality, purity and trust from Nawabshah."],
+    "viewProducts": "View our products",
+    "contact": "Contact us",
+    "compositionLabel": "Punj Sher 5 kg rice bag beside a bowl of cooked rice"
+  },
+  "productsSection": {
+    "title": "Products",
+    "carouselLabel": "Rice products",
+    "details": "{name} details",
+    "show": "Show {name} details",
+    "hide": "Hide {name} details",
+    "select": "Select {name}, {type}",
+    "imageAlt": "{name} — {type}",
+    "status": "{name}, {type}. Product {index} of {total}.",
+    "instructions": "Swipe or drag in either direction, or use the arrow keys. Select the center bag for product details.",
+    "hint": "Swipe Left",
+    "viewAll": "View all products"
+  },
+  "varietiesSection": {
+    "title": "Rice varieties",
+    "explore": "Explore rice varieties",
+    "bowlAlt": "Bowl of {name}"
+  },
+  "distributors": { "title": "Distributors" },
+  "historySection": {
+    "title": "History",
+    "body": "Founded in 1948 by {founder}, the business grew through honesty, hard work, and a commitment to providing quality rice sourced from Punjab and other cities. In 1968, his son {son} joined the business, continuing his father’s legacy and carrying forward the same values of quality, trust, and customer satisfaction.",
+    "founderRole": "Founder of A Mustafa Traders",
+    "chairmanRole": "Chairman",
+    "readMore": "Read our history"
+  },
+  "leadershipSection": {
+    "title": "Our Leadership",
+    "intro": "Our business continues to grow under the leadership of the next generation, carrying forward the values of honesty, quality, and customer trust. With experience, dedication, and a commitment to excellence, our leadership team works together to preserve the legacy while moving the business forward.",
+    "teamLabel": "Leadership team",
+    "meetMore": "Meet our leadership"
+  },
+  "roles": {
+    "ceo": "CEO & Co-Owner",
+    "md": "Managing Director & Co-Owner",
+    "operations": "Operations Manager"
+  },
+  "aboutSection": {
+    "title": "About Us",
+    "intro": "Mustafa Traders is a trusted rice business serving Nawabshah with a strong focus on quality, taste, and customer satisfaction. For generations, we have carefully selected and supplied premium rice varieties while maintaining the values of honesty, fair dealing, and reliability. Today, we continue to serve our customers with the same commitment that has shaped our name for decades.",
+    "missionTitle": "Our Mission",
+    "mission": [
+      "Our mission is to provide quality rice at fair prices while maintaining the honesty, trust, and personal service that have defined Mustafa Traders since 1948.",
+      "We aim to understand our customers' needs and offer carefully selected rice varieties that deliver excellent taste and dependable quality."
+    ],
+    "more": "More about us"
+  },
+  "footer": {
+    "title": "Contact Us",
+    "tagline": "We’d love to hear from you.",
+    "description": "For rice orders, product information, pricing, or any other inquiry, feel free to contact A Mustafa Traders. Our team is always ready to assist you.",
+    "socialLabel": "Social media and email",
+    "call": "Call",
+    "social": { "Instagram": "Instagram", "Facebook": "Facebook", "WhatsApp": "WhatsApp", "Email": "Email" }
+  },
+  "pages": {
+    "products": {
+      "title": "Our Rice Catalogue",
+      "crumb": "Products",
+      "intro": "Branded rice from A. Mustafa Traders, including 1121 and 1222 selections of basmati, steam, sella, white, and long-grain rice. Availability and pack sizes may vary, so please contact us before placing an order.",
+      "listLabel": "Rice products",
+      "packagingAlt": "{name} rice packaging"
+    },
+    "riceVarieties": {
+      "title": "Rice Varieties",
+      "intro": "A. Mustafa Traders offers a selection that includes 1121 basmati, PK 386 full grain, white basmati, and broken basmati rice. Contact us to discuss current availability and pricing.",
+      "listLabel": "Rice varieties"
+    },
+    "history": {
+      "title": "History",
+      "intro": "A. Mustafa Traders is a rice business serving Nawabshah, Sindh. Its story began in 1948 with a commitment to quality rice, honest dealing, and customer trust.",
+      "heritageTitle": "Our heritage",
+      "journeyTitle": "Our journey",
+      "milestones": [
+        { "year": "1948", "title": "The business is founded", "text": "Late Haji Muhammad Siddique founds the business, building it through honesty, hard work, and a commitment to providing quality rice sourced from Punjab and other cities." },
+        { "year": "1968", "title": "The second generation joins", "text": "His son, Haji Noor Mustafa Mustafai, joins the business, continuing his father’s legacy and carrying forward the same values of quality, trust, and customer satisfaction." },
+        { "year": "Today", "title": "The next generation leads", "text": "The business continues to grow under the leadership of the next generation, preserving the legacy while moving the business forward." }
+      ],
+      "principlesTitle": "What guides our work",
+      "principles": [
+        { "title": "Honesty and fair dealing", "text": "The values of honesty, fair dealing, and reliability, maintained for generations." },
+        { "title": "Quality rice", "text": "Carefully selected rice varieties that deliver excellent taste and dependable quality." },
+        { "title": "Customer trust", "text": "Personal service and reliability that have shaped our name for decades." }
+      ]
+    },
+    "leadership": {
+      "title": "Our Leadership",
+      "intro": "A. Mustafa Traders continues to grow under the leadership of the next generation, carrying forward the values of honesty, quality, and customer trust. With experience, dedication, and a commitment to excellence, our leadership team works together to preserve the legacy while moving the business forward."
+    },
+    "about": {
+      "title": "About Us",
+      "intro": "A. Mustafa Traders is a trusted rice business serving Nawabshah since 1948, with a strong focus on quality, taste, and customer satisfaction. For generations, we have carefully selected and supplied premium rice varieties while maintaining the values of honesty, fair dealing, and reliability, and today we continue to serve our customers with the same commitment that has shaped our name for decades."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "intro": "A. Mustafa Traders welcomes your inquiries about our rice products, varieties, availability, pricing, and orders. Whether you are buying for your home or your business, our team in Nawabshah is ready to help.",
+      "topics": [
+        { "title": "Product Inquiries", "text": "Learn more about our available rice varieties, product selections, and packaging information." },
+        { "title": "Orders & Pricing", "text": "Talk to our team about current product availability, order quantities, and pricing." },
+        { "title": "General Assistance", "text": "Reach out with business-related questions or for additional product information." }
+      ],
+      "closing": "Call, message, or email our team using the contact details below."
+    }
+  },
+  "moved": {
+    "title": "This page has moved",
+    "continue": "Continue to {link}."
+  },
+  "visitor": {
+    "label": "Optional visitor details",
+    "close": "Close and skip",
+    "title": "Stay in touch",
+    "description": "Share your details if you’d like us to know who’s visiting.",
+    "name": "Name",
+    "email": "Email",
+    "invalid": "Enter your name and a valid email address.",
+    "unavailable": "We couldn’t save that just now. Please try again later.",
+    "failed": "We couldn’t save your details. Please try again.",
+    "sending": "Sending…",
+    "submit": "Submit",
+    "skip": "Skip for now"
+  }
+}

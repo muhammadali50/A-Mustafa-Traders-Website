@@ -1,3 +1,4 @@
+// English copy is the source; Urdu overrides live in locales/ur.json under "products", keyed by id.
 // Bounds omit transparent margins only; source bags keep their original proportions.
 export const products = [
   {

@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import OptimizedImage from "./OptimizedImage";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useI18n } from "./LanguageProvider";
 import { navigation } from "../data/navigation";
 
 // Ignore jitter from trackpads/touch momentum; a deliberate scroll easily exceeds this.
@@ -11,15 +13,17 @@ const DIRECTION_THRESHOLD = 8;
 const TOP_ZONE = 16;
 
 function NavigationItems({ pathname, onNavigate }) {
-  return navigation.map(({ label, href }) => (
+  const { t } = useI18n();
+  return navigation.map(({ href }) => (
     <li key={href}>
-      <Link href={href} onClick={onNavigate} aria-current={pathname === href ? "page" : undefined} className="nav-item">{label}</Link>
+      <Link href={href} onClick={onNavigate} aria-current={pathname === href ? "page" : undefined} className="nav-item">{t(`nav.${href}`)}</Link>
     </li>
   ));
 }
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { t, dir } = useI18n();
   const shellRef = useRef(null);
   const menuRef = useRef(null);
 
@@ -65,20 +69,22 @@ export default function Navbar() {
 
   return (
     <div ref={shellRef} className="site-header-shell" data-state="top">
-      <header className="site-header" onFocusCapture={reveal}>
-        <Link href="/" onClick={closeMenu} aria-label="A. Mustafa Traders — home" className="brand">
+      {/* The bar keeps one physical layout in both languages (logo left); link lists follow the reading direction. */}
+      <header className="site-header" dir="ltr" onFocusCapture={reveal}>
+        <Link href="/" onClick={closeMenu} aria-label={t("common.brandHome")} className="brand">
           <OptimizedImage src="/media/AMT logo.webp" alt="" width={1020} height={1020} loading="eager" className="h-full w-full object-contain" sizes="(max-width: 1023px) 58px, 7.1vw" />
         </Link>
-        <nav aria-label="Main" className="desktop-navigation">
-          <ul><NavigationItems pathname={pathname} /></ul>
+        <nav aria-label={t("common.mainNavigation")} className="desktop-navigation">
+          <ul dir={dir}><NavigationItems pathname={pathname} /></ul>
         </nav>
+        <LanguageSwitcher />
         <details ref={menuRef} className="mobile-navigation" onToggle={reveal}
           onKeyDown={(event) => { if (event.key === "Escape" && menuRef.current.open) { closeMenu(); menuRef.current.querySelector("summary").focus(); } }}>
-          <summary aria-label="Menu">
+          <summary aria-label={t("common.menu")}>
             <svg className="menu-open" width="24" height="24" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
             <svg className="menu-close" width="24" height="24" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
           </summary>
-          <nav aria-label="Main" className="mobile-panel">
+          <nav aria-label={t("common.mainNavigation")} className="mobile-panel" dir={dir}>
             <ul><NavigationItems pathname={pathname} onNavigate={closeMenu} /></ul>
           </nav>
         </details>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useI18n } from "./LanguageProvider";
 import styles from "./VisitorTracking.module.css";
 
 const VISITOR_KEY = "amt_visitor_key";
@@ -239,6 +240,7 @@ function attachTrackingListeners() {
 }
 
 function EmailCapturePopup() {
+  const { t, dir } = useI18n();
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -275,12 +277,12 @@ function EmailCapturePopup() {
     const trimmedName = name.trim();
     const trimmedEmail = email.trim();
     if (!trimmedName || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
-      setError("Enter your name and a valid email address.");
+      setError("visitor.invalid");
       return;
     }
     const visitorKey = getVisitorKey();
     if (!visitorKey || !TRACKING_API_URL) {
-      setError("We couldn’t save that just now. Please try again later.");
+      setError("visitor.unavailable");
       return;
     }
 
@@ -303,7 +305,7 @@ function EmailCapturePopup() {
       }
       setVisible(false);
     } catch {
-      setError("We couldn’t save your details. Please try again.");
+      setError("visitor.failed");
     } finally {
       setSubmitting(false);
     }
@@ -312,20 +314,20 @@ function EmailCapturePopup() {
   if (!visible) return null;
 
   return (
-    <aside className={styles.popup} aria-label="Optional visitor details" data-clarity-mask="true">
-      <button className={styles.close} type="button" onClick={closePopup} aria-label="Close and skip">×</button>
-      <p className={styles.eyebrow}>A. Mustafa Traders</p>
-      <h2 className={styles.title}>Stay in touch</h2>
-      <p className={styles.description}>Share your details if you’d like us to know who’s visiting.</p>
+    <aside className={styles.popup} dir={dir} aria-label={t("visitor.label")} data-clarity-mask="true">
+      <button className={styles.close} type="button" onClick={closePopup} aria-label={t("visitor.close")}>×</button>
+      <p className={styles.eyebrow} lang="en">A. Mustafa Traders</p>
+      <h2 className={styles.title}>{t("visitor.title")}</h2>
+      <p className={styles.description}>{t("visitor.description")}</p>
       <form className={styles.form} onSubmit={submit} noValidate>
-        <label className={styles.label} htmlFor="visitor-name">Name</label>
+        <label className={styles.label} htmlFor="visitor-name">{t("visitor.name")}</label>
         <input id="visitor-name" className={styles.input} autoComplete="name" value={name} onChange={(event) => setName(event.target.value)} required />
-        <label className={styles.label} htmlFor="visitor-email">Email</label>
-        <input id="visitor-email" className={styles.input} type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
-        {error && <p className={styles.error} role="alert">{error}</p>}
-        <button className={styles.submit} type="submit" disabled={submitting}>{submitting ? "Sending…" : "Submit"}</button>
+        <label className={styles.label} htmlFor="visitor-email">{t("visitor.email")}</label>
+        <input id="visitor-email" className={styles.input} type="email" dir="ltr" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
+        {error && <p className={styles.error} role="alert">{t(error)}</p>}
+        <button className={styles.submit} type="submit" disabled={submitting}>{submitting ? t("visitor.sending") : t("visitor.submit")}</button>
       </form>
-      <button className={styles.skip} type="button" onClick={closePopup}>Skip for now</button>
+      <button className={styles.skip} type="button" onClick={closePopup}>{t("visitor.skip")}</button>
     </aside>
   );
 }
