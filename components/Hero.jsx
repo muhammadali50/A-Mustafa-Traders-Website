@@ -1,7 +1,12 @@
+"use client";
+
 import ButtonLink from "./ButtonLink";
+import { useI18n } from "./LanguageProvider";
 import OptimizedImage from "./OptimizedImage";
 
 export default function Hero() {
+  const { t } = useI18n();
+  const [line1, line2] = t("hero.description");
   return (
     <section id="home" aria-labelledby="hero-heading" className="hero">
       {/* object-fit: cover — on screens taller than the image ratio, its width follows the height. */}
@@ -10,17 +15,17 @@ export default function Hero() {
       <div aria-hidden="true" className="hero-shade pointer-events-none absolute inset-0 -z-10" />
       <div className="hero-copy text-white">
         <h1 id="hero-heading" className="font-serif font-normal">
-          <span className="block">Premium Rice</span>{" "}
-          <span className="block text-[var(--brand-gold)]">Trusted Quality</span>
+          <span className="block">{t("hero.titleLine1")}</span>{" "}
+          <span className="block text-[var(--brand-gold)]">{t("hero.titleLine2")}</span>
         </h1>
-        <p className="hero-description font-medium">Delivering carefully selected rice with<br /> quality, purity and trust from Nawabshah.</p>
+        <p className="hero-description font-medium">{line1}<br /> {line2}</p>
         <div className="hero-actions">
-          <ButtonLink href="/products">View our products</ButtonLink>
+          <ButtonLink href="/products">{t("hero.viewProducts")}</ButtonLink>
           {/* Phones show a single CTA; Contact remains in the navigation and footer. */}
-          <ButtonLink href="/contact" variant="outline" className="max-[767px]:hidden">Contact us</ButtonLink>
+          <ButtonLink href="/contact" variant="outline" className="max-[767px]:hidden">{t("hero.contact")}</ButtonLink>
         </div>
       </div>
-      <div className="product-composition" role="img" aria-label="Punj Sher 5 kg rice bag beside a bowl of cooked rice">
+      <div className="product-composition" role="img" aria-label={t("hero.compositionLabel")}>
         <div className="rice-bag absolute aspect-[433/577]">
           {/* Preserve the previous asset's visible footprint inside its unchanged container. */}
           <div className="absolute" style={{ left: "18.7067%", top: "20.2773%", width: "54.9654%", height: "62.565%" }}>

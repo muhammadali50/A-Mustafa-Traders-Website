@@ -1,5 +1,7 @@
+// English copy is the source; Urdu overrides live in locales/ur.json under "varieties", keyed by id.
 export const riceVarieties = [
   {
+    id: "1121-steam",
     name: "1121 Steam Basmati Rice",
     lines: ["1121 Steam", "Basmati Rice"],
     image: "1121 Steam Basmati rice.webp",
@@ -7,6 +9,7 @@ export const riceVarieties = [
     description: "A steam rice option in our 1121 basmati selection.",
   },
   {
+    id: "1121-sella",
     name: "1121 Sella Basmati Rice",
     lines: ["1121 Sella", "Basmati Rice"],
     image: "1121 Sella Basmati Rice.webp",
@@ -14,6 +17,7 @@ export const riceVarieties = [
     description: "A sella rice option in our 1121 basmati selection.",
   },
   {
+    id: "pk-386",
     name: "PK 386 Full Grain Rice",
     lines: ["PK 386 Full", "Grain Rice"],
     image: "Pk-386 Full Grain Rice.webp",
@@ -21,6 +25,7 @@ export const riceVarieties = [
     description: "A full grain rice variety in the A. Mustafa Traders range.",
   },
   {
+    id: "basmati-white",
     name: "Basmati White Rice",
     lines: ["Basmati", "White Rice"],
     image: "basmati white rice.webp",
@@ -28,6 +33,7 @@ export const riceVarieties = [
     description: "A white rice option within our basmati selection.",
   },
   {
+    id: "basmati-broken",
     name: "Basmati Broken Rice",
     lines: ["Basmati", "Broken Rice"],
     image: "basmati broken rice.webp",

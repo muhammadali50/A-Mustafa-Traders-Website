@@ -18,3 +18,15 @@ export const scriptFont = localFont({
   fallback: ["Segoe Script", "cursive"],
   preload: false,
 });
+
+// Urdu (Nastaliq): the Arabic-script subset of Noto Nastaliq Urdu (variable 400–700, SIL OFL).
+// It is only applied under html[lang="ur"], so English visitors never download it.
+export const urduFont = localFont({
+  src: "./fonts/noto-nastaliq-urdu.woff2",
+  weight: "400 700",
+  display: "swap",
+  variable: "--font-amt-urdu",
+  fallback: ["Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", "Urdu Typesetting", "Noto Naskh Arabic", "Arial", "sans-serif"],
+  adjustFontFallback: false,
+  preload: false,
+});

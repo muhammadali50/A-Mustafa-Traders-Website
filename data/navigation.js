@@ -1,10 +1,11 @@
 // Primary navigation: every item is a dedicated page (shared by header, footer and sitemap).
+// Labels live in locales/*.json under nav["<href>"].
 export const navigation = [
-  { label: "Home", href: "/" },
-  { label: "Products", href: "/products" },
-  { label: "Rice Varieties", href: "/rice-varieties" },
-  { label: "History", href: "/history" },
-  { label: "Our Leadership", href: "/leadership" },
-  { label: "About Us", href: "/about" },
-  { label: "Contact Us", href: "/contact" },
+  { href: "/" },
+  { href: "/products" },
+  { href: "/rice-varieties" },
+  { href: "/history" },
+  { href: "/leadership" },
+  { href: "/about" },
+  { href: "/contact" },
 ];

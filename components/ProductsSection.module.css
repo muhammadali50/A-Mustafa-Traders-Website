@@ -4,7 +4,7 @@
  * decorative signature and the carousel scale from the same box rather than the viewport.
  */
 .stage { position: relative; container-type: inline-size; max-width: 1680px; margin-inline: auto; height: clamp(440px, 0.558 * min(100vw, 1680px), 720px); }
-.heading { position: absolute; z-index: 4; top: 5%; left: 3%; margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(36px, 5.1vw, 66px); line-height: 1.2; }
+.heading { position: absolute; z-index: 4; top: 5%; inset-inline-start: 3%; margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(36px, 5.1vw, 66px); line-height: 1.2; }
 
 /*
  * "A Mustafa Traders" signature. The rendered line is ≈5.1× its font-size wide, so 14cqw keeps it
@@ -37,7 +37,7 @@
 
 @media (max-width: 639px) {
   .stage { height: clamp(400px, 114vw, 560px); }
-  .heading { top: 4.5%; left: 0; width: 100%; text-align: center; font-size: clamp(30px, 8.4vw, 44px); }
+  .heading { top: 4.5%; inset-inline-start: 0; width: 100%; text-align: center; font-size: clamp(30px, 8.4vw, 44px); }
   /*
    * Phones: the bags span almost the whole band, so the signature sits behind their upper third
    * (carousel top + 12cqw); its ends show above the side bags, as it reads between them on desktop.
